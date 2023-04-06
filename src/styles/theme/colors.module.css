@@ -155,10 +155,16 @@
   background-color: var(--md-sys-color-surface);
 }
 
+.surface-0 {
+  background-color: var(--md-sys-color-surface-0);
+}
 .surface-1 {
   background-color: var(--md-sys-color-surface-1);
 }
 
+.surface-container {
+  background-color: var(--md-sys-color-surface-container);
+}
 .surface-text {
   color: var(--md-sys-color-surface);
 }

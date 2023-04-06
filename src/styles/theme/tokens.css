@@ -1,7 +1,8 @@
 :root {
   --md-source: #bc85fc;
-  --md-sys-color-primary-rgb: 160 63 40;
-  --md-sys-color-surface-1: rgb(var(--md-sys-color-primary-rgb) / 0.05);
+  --md-sys-color-primary-rgb: 120 66 181;
+    --md-sys-color-surface-0: rgb(var(--md-sys-color-primary-rgb) / 0.01);
+    --md-sys-color-surface-1: rgb(var(--md-sys-color-primary-rgb) / 0.06);
   --md-sys-color-surface-2: rgb(var(--md-sys-color-primary-rgb) / 0.08);
   --md-sys-color-surface-3: rgb(var(--md-sys-color-primary-rgb) / 0.11);
   --md-sys-color-surface-4: rgb(var(--md-sys-color-primary-rgb) / 0.12);
@@ -127,7 +128,7 @@
   --md-sys-color-on-error-container-light: #410002;
   --md-sys-color-background-light: #fffbff;
   --md-sys-color-on-background-light: #1d1b1e;
-  --md-sys-color-surface-light: #fffbff;
+  --md-sys-color-surface-light: #fff7ff;
   --md-sys-color-on-surface-light: #1d1b1e;
   --md-sys-color-surface-variant-light: #e9e0eb;
   --md-sys-color-on-surface-variant-light: #4a454e;
@@ -139,6 +140,7 @@
   --md-sys-color-surface-tint-light: #7842b5;
   --md-sys-color-outline-variant-light: #ccc4cf;
   --md-sys-color-scrim-light: #000000;
+  --md-sys-color-suface-conatiner-light: #efdbff;
   /* dark */
   --md-sys-color-primary-dark: #dab9ff;
   --md-sys-color-on-primary-dark: #470083;
@@ -170,6 +172,7 @@
   --md-sys-color-surface-tint-dark: #dab9ff;
   --md-sys-color-outline-variant-dark: #4a454e;
   --md-sys-color-scrim-dark: #000000;
+  --md-sys-color-suface-conatiner-dark: #1e1a22;
   /* display - large */
   --md-sys-typescale-display-large-font-family-name: ;
   --md-sys-typescale-display-large-font-family-style: "Regular";

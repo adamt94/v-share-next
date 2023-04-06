@@ -22,7 +22,10 @@ export default function SearchCard({
   image,
 }: SearchCardProps) {
   return (
-    <Card className="relative w-60 m-4 surface-1 flex flex-col justify-between shadow-lg shadow-color">
+    <Card
+      key={`${heading}${subheading}`}
+      className="relative w-60 m-4 surface-1 flex flex-col justify-between shadow-lg shadow-color"
+    >
       <CardActionArea onClick={() => {}}>
         <div className="relative h-36">
           <CardMedia

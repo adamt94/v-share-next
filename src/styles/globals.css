@@ -13,3 +13,24 @@
 .h-363 {
   height: 363px;
 }
+.p-5625 {
+  padding-bottom: 56.25%;
+}
+
+iframe {
+  position: absolute;
+}
+
+#left-column {
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For IE and Edge */
+  scrollbar-color: transparent transparent;
+  /* For Firefox */
+}
+
+#left-column::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}

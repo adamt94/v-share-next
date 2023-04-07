@@ -14,19 +14,21 @@ export type SearchCardProps = {
   heading: string;
   subheading: string;
   image: string;
+  onCardClick: () => void;
 };
 
 export default function SearchCard({
   heading,
   subheading,
   image,
+  onCardClick,
 }: SearchCardProps) {
   return (
     <Card
       key={`${heading}${subheading}`}
       className="relative w-60 m-4 surface-1 flex flex-col justify-between shadow-lg shadow-color"
     >
-      <CardActionArea onClick={() => {}}>
+      <CardActionArea onClick={onCardClick}>
         <div className="relative h-36">
           <CardMedia
             className="h-36"

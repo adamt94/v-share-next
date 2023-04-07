@@ -1,4 +1,4 @@
-import useFetch from "@/util/usefetch";
+import useFetch from "@/util/useFetch";
 import { useState } from "react";
 import { Video } from "./Search";
 

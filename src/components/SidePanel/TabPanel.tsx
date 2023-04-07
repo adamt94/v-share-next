@@ -46,6 +46,7 @@ export const TabPanel = ({ defaultTab = 0, tabs }: TabPanelProps) => {
       <div className="flex items-center space-x-4 w-full surface-1">
         <TabButton
           index={0}
+          style="surface-1"
           onClick={() => {
             setActiveTab(1);
           }}
@@ -53,7 +54,6 @@ export const TabPanel = ({ defaultTab = 0, tabs }: TabPanelProps) => {
         />
         <TabButton
           index={0}
-          style="surface-1"
           onClick={() => {
             setActiveTab(2);
           }}
@@ -61,10 +61,9 @@ export const TabPanel = ({ defaultTab = 0, tabs }: TabPanelProps) => {
         />
       </div>
       <div className="h-full surface-1 flex-grow">
-        {" "}
         <div
           className={`h-full ${
-            activeTab === 1 ? "surface-1" : ""
+            activeTab === 2 ? "surface-1 hidden" : ""
           }   rounded-md`}
         >
           <div className="flex flex-col flex-grow w-full surface-1 shadow-xl rounded-lg h-full">
@@ -120,7 +119,7 @@ export const TabPanel = ({ defaultTab = 0, tabs }: TabPanelProps) => {
               </div>
               <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
                 <div>
-                  <div className="primary text-white p-3 rounded-l-lg rounded-br-lg">
+                  <div className="primary on-primary-text p-3 rounded-l-lg rounded-br-lg">
                     <p className="text-sm">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna

@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import Search from "../Search/Search";
 import SidePanel from "../SidePanel/SidePanel";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 
+type VideoContextType = {
+  currentVideoId: string;
+  setCurrentVideoId: (url: string) => void;
+};
+
+export const CurrentVideoContext = createContext<VideoContextType>({
+  currentVideoId: "",
+  setCurrentVideoId: () => {},
+});
+
 export default function Room() {
   const [showSecondColumn, setShowSecondColumn] = useState<boolean>(false);
+  const [currentVideoId, setCurrentVideoId] = useState<string>("");
+  const firstColumnClass = showSecondColumn ? "w-full" : "w-full";
 
-  console.log("showSecondColumn", showSecondColumn);
-  const firstColumnClass = showSecondColumn ? "w-full md:w-3/5" : "w-full";
-
-  const secondColumnClass = showSecondColumn ? "w-full md:w-2/5" : "hidden";
+  const secondColumnClass = showSecondColumn ? "" : "hidden";
 
   return (
-    <>
-      {/* {!!isALobby && userName && <Video numberOfUsers={numberOfUsers} />} */}
-      {/* <input type="hidden" name="lobby" value={randomString(10)} /> */}
+    <CurrentVideoContext.Provider value={{ currentVideoId, setCurrentVideoId }}>
       <div className="flex h-screen">
         <section
           className={`text-center flex flex-col gap-8 overflow-auto ${firstColumnClass}`}
@@ -49,7 +56,10 @@ export default function Room() {
             />
           </svg>
         </button>
-        <aside className={`${secondColumnClass} overflow-hidden hide-scroll`}>
+        <aside
+          className={`${secondColumnClass} overflow-hidden hide-scroll`}
+          id="right-column"
+        >
           <SidePanel
             isOpen={showSecondColumn}
             onToggle={(value) => {
@@ -58,7 +68,6 @@ export default function Room() {
           />
         </aside>
       </div>
-      {/* <SearchPanel /> */}
-    </>
+    </CurrentVideoContext.Provider>
   );
 }

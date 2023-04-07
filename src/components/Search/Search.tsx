@@ -1,10 +1,10 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
-import SearchCard, { SearchCardProps } from "./SearchCard";
+import SearchCard from "./SearchCard";
 import SearchForm from "./SearchForm";
-import useFetch from "@/util/usefetch";
 import useSearch from "./useSearch";
 import LoadingCards from "./LoadingCards";
+import { CurrentVideoContext } from "../Room/Room";
 
 const GET_POPULAR_VIDEO_QUERY = gql`
   query popularVideos {
@@ -37,7 +37,7 @@ export default function Search() {
     nextFetchPolicy: "cache-first",
   });
   const [searchValue, setSearchValue] = useState("");
-
+  const { setCurrentVideoId } = useContext(CurrentVideoContext);
   const {
     videos,
     loading: searchLoading,
@@ -78,6 +78,9 @@ export default function Search() {
               heading={video.title}
               subheading={video.user}
               image={video.thumbnail}
+              onCardClick={() => {
+                setCurrentVideoId(video.src);
+              }}
             />
           )
         )}

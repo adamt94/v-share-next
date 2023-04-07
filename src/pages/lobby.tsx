@@ -1,6 +1,9 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Room from "@/components/Room/Room";
+import VideoPlayer from "@/components/VideoPlayer/ReactPlayerWrapper";
+
+export const VideoPlayerWrapper = VideoPlayer;
 
 export default function Lobby() {
   return (

@@ -8,42 +8,6 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import PauseIcon from "@mui/icons-material/Pause";
 import { convertToTime, convertToWholeSeconds } from "@/util/numberFormats";
 
-// const useStyles = makeStyles({
-//   volumeSlider: {
-//     width: "3rem",
-//     padding: "3px 0",
-//     marginLeft: "2px",
-//   },
-//   slider: {
-//     padding: 0,
-//     position: "relative",
-//   },
-//   rail: {
-//     height: "0.4rem",
-//     bottom: 0,
-//   },
-//   sliderThumb: {
-//     display: "none",
-//   },
-//   thumb: {
-//     height: "14px",
-//     width: "14px",
-//     top: "-4px",
-//   },
-//   button: {
-//     padding: "0px",
-//   },
-// });
-
-// function ValueLabelComponent(props) {
-//   const { children, open, valueLabelFormat } = props;
-//   return (
-//     <Tooltip open={open} enterTouchDelay={0} placement="top" title={}>
-//       {children}
-//     </Tooltip>
-//   );
-// }
-
 type VideoPlayerControlsProps = {
   isPlaying: boolean;
   onPlaybackChange: () => void;

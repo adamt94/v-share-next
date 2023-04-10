@@ -4,7 +4,7 @@ import SearchCard from "./SearchCard";
 import SearchForm from "./SearchForm";
 import useSearch from "./useSearch";
 import LoadingCards from "./LoadingCards";
-import { CurrentVideoContext } from "../Room/Room";
+import { CurrentVideoContext, VideoQueueContext } from "../Room/Room";
 
 const GET_POPULAR_VIDEO_QUERY = gql`
   query popularVideos {
@@ -38,8 +38,9 @@ export default function Search() {
   });
   const [searchValue, setSearchValue] = useState("");
   const { setCurrentVideoId } = useContext(CurrentVideoContext);
+  const { videos, setVideos } = useContext(VideoQueueContext);
   const {
-    videos,
+    videos: searchVideos,
     loading: searchLoading,
     error: searchError,
   } = useSearch({
@@ -69,7 +70,7 @@ export default function Search() {
       />
 
       <div className="flex flex-wrap justify-center py-10">
-        {(videos || getMostPopularVideos)?.map(
+        {(searchVideos || getMostPopularVideos)?.map(
           (
             video: Video // use the 'Video' type here
           ) => (
@@ -78,6 +79,7 @@ export default function Search() {
               heading={video.title}
               subheading={video.user}
               image={video.thumbnail}
+              onAddToQueue={() => setVideos([...videos, video])}
               onCardClick={() => {
                 setCurrentVideoId(video.src);
               }}

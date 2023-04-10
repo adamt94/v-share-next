@@ -9,18 +9,22 @@ import {
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useContext } from "react";
+import { VideoQueueContext } from "../Room/Room";
 
 export type SearchCardProps = {
   heading: string;
   subheading: string;
   image: string;
   onCardClick: () => void;
+  onAddToQueue: () => void;
 };
 
 export default function SearchCard({
   heading,
   subheading,
   image,
+  onAddToQueue,
   onCardClick,
 }: SearchCardProps) {
   return (
@@ -52,7 +56,7 @@ export default function SearchCard({
           className="flex justify-end"
         >
           <IconButton
-            onClick={() => {}}
+            onClick={onAddToQueue}
             className="primary-text"
             aria-label="add to queue"
           >

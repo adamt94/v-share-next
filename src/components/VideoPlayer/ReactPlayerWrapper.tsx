@@ -6,7 +6,7 @@ type VideoPlayerProps = {
   playerProps: BaseReactPlayerProps;
 };
 
-// HACK: This is a workaround for the issue with SSR hydration the reference doesn't work with dynamic import
+// HACK: This is a workaround for the issue with SSR hydration the playerRef doesn't work with dynamic import
 
 export default function VideoPlayer({
   playerRef,

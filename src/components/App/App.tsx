@@ -5,8 +5,6 @@ import { Button } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import SyncIcon from "@mui/icons-material/Sync";
 import ChatIcon from "@mui/icons-material/Chat";
-import SearchForm from "../Search/SearchForm";
-import SearchCard from "../Search/SearchCard";
 import Search from "../Search/Search";
 
 export default function App() {

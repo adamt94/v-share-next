@@ -1,7 +1,7 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import dynamic from "next/dynamic";
-import { CurrentVideoContext } from "../Room/Room";
+import { CurrentVideoContext, VideoQueueContext } from "../Room/Room";
 import VideoPlayerControls from "./VideoPlayerControls";
 import { BaseReactPlayerProps } from "react-player/base";
 import ReactPlayer from "react-player";
@@ -11,7 +11,8 @@ const ReactVideoPlayer = dynamic(() => import("./ReactPlayerWrapper"), {
 });
 
 export default function VideoPlayer() {
-  const { currentVideoId } = useContext(CurrentVideoContext);
+  const { currentVideoId, setCurrentVideoId } = useContext(CurrentVideoContext);
+  const { videos, setVideos } = useContext(VideoQueueContext);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(0.1);
   const [duration, setDuration] = useState<number>(0);
@@ -34,6 +35,13 @@ export default function VideoPlayer() {
     setOnSeeking(true);
   };
 
+  useEffect(() => {
+    if (!currentVideoId && videos.length) {
+      setCurrentVideoId(videos[0].src);
+      setVideos(videos.slice(1));
+    }
+  }, [currentVideoId, videos]);
+  console.log(currentVideoId);
   return (
     <section className="relative w-full flex flex-col">
       <ReactVideoPlayer
@@ -41,7 +49,9 @@ export default function VideoPlayer() {
         playerProps={{
           width: "100%",
           height: "100%",
-          onEnded: () => {},
+          onEnded: () => {
+            setCurrentVideoId("");
+          },
           controls: false,
           playing: isPlaying,
           volume: volume,
@@ -79,9 +89,9 @@ export default function VideoPlayer() {
         onSeekMouseDown={handleSeekMouseDown}
         onSeek={onSeeking}
         played={0}
-        hasNext={false}
-        onNext={function (): void {
-          throw new Error("Function not implemented.");
+        hasNext={videos.length > 0}
+        onNext={() => {
+          setCurrentVideoId("");
         }}
         duration={duration}
         elapsedTime={playedSeconds}

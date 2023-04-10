@@ -26,7 +26,7 @@ const TabButton = ({ index, onClick, label, style }: TabButtonProps) => {
       className={`flex items-center flex-1 p-2 rounded-md h-full justify-center ${style}`}
       onClick={onClick}
     >
-      <div className="flex flex-col items-center on-surface-text">
+      <div className="flex flex-col items-center on-surface-text ${style}">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -45,8 +45,8 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex items-center space-x-4 w-full surface-1">
+    <div className="flex flex-col h-full surface-1">
+      <div className="flex items-center space-x-4 w-full">
         <TabButton
           index={0}
           style="surface-1"
@@ -63,13 +63,13 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
           label={"Video Queue"}
         />
       </div>
-      <div className="h-full surface-1 flex-grow overflow-y-auto">
+      <div className="h-full  flex-grow overflow-y-auto">
         <div
           className={`h-full ${
             activeTab === 1 ? "surface-1" : " "
           }   rounded-md`}
         >
-          <div className="flex flex-col flex-grow w-full surface-1 shadow-xl rounded-lg h-full">
+          <div className="flex flex-col flex-grow w-full shadow-xl rounded-lg h-full">
             {activeTab === 1 ? <ChatTab /> : <VideoTab />}
           </div>
         </div>

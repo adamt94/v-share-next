@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ChatTab from "./Tabs/ChatTab";
-import VideoTab from "./Tabs/VideoTab";
+import ChatTab from "./Tabs/Chat/Chat";
+import VideoTab from "./Tabs/VideoQueue/VideoQueue";
 
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";

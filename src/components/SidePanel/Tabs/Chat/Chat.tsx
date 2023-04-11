@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Message from "./Chat/Message";
+import Message from "./Message";
 import SendIcon from "@mui/icons-material/Send";
 export default function ChatTab() {
   const [message, setMessage] = useState("");

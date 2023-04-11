@@ -6,7 +6,7 @@ import { CurrentVideoContext, VideoQueueContext } from "@/components/Room/Room";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-export default function VideoTab() {
+export default function VideoQueue() {
   const { videos, setVideos } = useContext(VideoQueueContext);
   const { setCurrentVideoId } = useContext(CurrentVideoContext);
 

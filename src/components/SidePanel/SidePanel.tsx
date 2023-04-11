@@ -9,8 +9,6 @@ type SidePanelProps = {
 };
 
 const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
-  const [currentTabIndex, setCurrentTabIndex] = useState(1);
-
   const togglePanel = () => {
     onToggle(!isOpen);
   };

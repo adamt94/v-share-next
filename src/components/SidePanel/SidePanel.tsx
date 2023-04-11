@@ -31,7 +31,7 @@ const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
       />
       <button
         onClick={togglePanel}
-        className="absolute right-0 top-0 m-2 on-surface-variant surface-variant-text rounded-full focus:outline-none"
+        className="absolute right-0 top-0 m-2 surface-variant on-surface-variant-text rounded-full focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

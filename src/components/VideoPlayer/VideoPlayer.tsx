@@ -52,6 +52,9 @@ export default function VideoPlayer() {
           onEnded: () => {
             setCurrentVideoId("");
           },
+          onReady: () => {
+            setIsPlaying(true);
+          },
           controls: false,
           playing: isPlaying,
           volume: volume,

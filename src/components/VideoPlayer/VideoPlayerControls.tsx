@@ -47,13 +47,17 @@ export default function VideoPlayerControls({
 }: VideoPlayerControlsProps) {
   const elapsedTimeString = convertToWholeSeconds(elapsedTime);
   return (
-    <div className="surface-1">
-      <div className="  px-2 w-full h-2 relative">
+    <div className="surface-1 ">
+      <div className="  px-2 w-full h-2 relative group">
         <Slider
-          className="p-0 absolute top-0 left-0 on-secondary secondary-text"
+          className="p-0 absolute top-0 left-0 on-secondary secondary-text group-hover:h-2"
           min={0}
           onChange={(_, value) => {
             onSeekChange(value as number);
+          }}
+          classes={{
+            // class name, e.g. `classes-nesting-root-x`
+            thumb: "opacity-0 group-hover:opacity-100",
           }}
           value={elapsedTime}
           max={duration}
@@ -84,6 +88,9 @@ export default function VideoPlayerControls({
           </button>
           <Slider
             className=" on-secondary secondary-text p-0"
+            classes={{
+              thumb: "w-4 h-4",
+            }}
             defaultValue={volume}
             onChange={(_, value) => onVolumeChange(value as number)}
             min={0}

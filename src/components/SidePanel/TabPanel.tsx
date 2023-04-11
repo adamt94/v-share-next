@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
-import { VideoQueueContext } from "../Room/Room";
+import React, { useState } from "react";
 import ChatTab from "./Tabs/ChatTab";
 import VideoTab from "./Tabs/VideoTab";
+
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 type Tab = {
   title: string;
@@ -17,9 +19,10 @@ type TabButtonProps = {
   onClick: () => void;
   label: string;
   style?: string;
+  icon?: React.ReactNode;
 };
 
-const TabButton = ({ index, onClick, label, style }: TabButtonProps) => {
+const TabButton = ({ index, onClick, label, style, icon }: TabButtonProps) => {
   return (
     <button
       tabIndex={index}
@@ -27,14 +30,7 @@ const TabButton = ({ index, onClick, label, style }: TabButtonProps) => {
       onClick={onClick}
     >
       <div className="flex flex-col items-center on-surface-text ${style}">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path d="M17 9H3a1 1 0 00-1 1v6a1 1 0 001 1h14a1 1 0 001-1V10a1 1 0 00-1-1zM3 5a1 1 0 00-1 1v2a1 1 0 001 1h14a1 1 0 001-1V6a1 1 0 00-1-1H3z" />
-        </svg>
+        {icon}
         <span>{label}</span>
       </div>
     </button>
@@ -53,6 +49,7 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
           onClick={() => {
             setActiveTab(1);
           }}
+          icon={<ChatBubbleOutlineIcon />}
           label={"Messages"}
         />
         <TabButton
@@ -60,6 +57,7 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
           onClick={() => {
             setActiveTab(2);
           }}
+          icon={<FormatListBulletedIcon />}
           label={"Video Queue"}
         />
       </div>

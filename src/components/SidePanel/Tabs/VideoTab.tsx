@@ -4,6 +4,8 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import VideoCard from "./VideoCard";
 import { CurrentVideoContext, VideoQueueContext } from "@/components/Room/Room";
 
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+
 export default function VideoTab() {
   const { videos, setVideos } = useContext(VideoQueueContext);
   const { setCurrentVideoId } = useContext(CurrentVideoContext);
@@ -18,6 +20,15 @@ export default function VideoTab() {
       return newVideos;
     });
   }, []);
+
+  if (videos.length === 0)
+    return (
+      <div className="flex flex-col justify-center items-center h-full on-surface-text opacity-70">
+        Press the
+        <AddCircleIcon className="mr-2" />
+        to queue a video
+      </div>
+    );
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

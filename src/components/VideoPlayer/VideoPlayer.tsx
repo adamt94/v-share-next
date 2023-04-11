@@ -44,42 +44,44 @@ export default function VideoPlayer() {
   console.log(currentVideoId);
   return (
     <section className="relative w-full flex flex-col">
-      <ReactVideoPlayer
-        playerRef={player}
-        playerProps={{
-          width: "100%",
-          height: "100%",
-          onEnded: () => {
-            setCurrentVideoId("");
-          },
-          onReady: () => {
-            setIsPlaying(true);
-          },
-          controls: false,
-          playing: isPlaying,
-          volume: volume,
-          url: currentVideoId,
-          style: {
-            position: "relative",
-            paddingBottom: "56.25%",
-          },
-          onSeek: () => {
-            console.log("onSeek");
-            setOnSeeking(false);
-          },
-          onProgress: (data) => {
-            if (!onSeeking) {
-              setPlayedSeconds(data.playedSeconds);
-            }
-          },
-          config: {
-            youtube: {
-              playerVars: { controls: 0 },
+      <div className="h-[calc(100vh-3rem)] overflow-hidden">
+        <ReactVideoPlayer
+          playerRef={player}
+          playerProps={{
+            width: "100%",
+            height: "100%",
+            onEnded: () => {
+              setCurrentVideoId("");
             },
-          },
-          onDuration: (data) => setDuration(data),
-        }}
-      />
+            onReady: () => {
+              setIsPlaying(true);
+            },
+            controls: false,
+            playing: isPlaying,
+            volume: volume,
+            url: currentVideoId,
+            style: {
+              position: "relative",
+              paddingBottom: "56.25%",
+            },
+            onSeek: () => {
+              console.log("onSeek");
+              setOnSeeking(false);
+            },
+            onProgress: (data) => {
+              if (!onSeeking) {
+                setPlayedSeconds(data.playedSeconds);
+              }
+            },
+            config: {
+              youtube: {
+                playerVars: { controls: 0 },
+              },
+            },
+            onDuration: (data) => setDuration(data),
+          }}
+        />
+      </div>
       <VideoPlayerControls
         isPlaying={isPlaying}
         onPlaybackChange={() => {

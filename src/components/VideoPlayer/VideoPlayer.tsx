@@ -62,7 +62,7 @@ export default function VideoPlayer() {
             url: currentVideoId,
             style: {
               position: "relative",
-              paddingBottom: "56.25%",
+              objectFit: "contain",
             },
             onSeek: () => {
               console.log("onSeek");

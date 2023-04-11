@@ -2,10 +2,14 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import Room from "@/components/Room/Room";
 import VideoPlayer from "@/components/VideoPlayer/ReactPlayerWrapper";
+import { useRouter } from "next/dist/client/router";
 
 export const VideoPlayerWrapper = VideoPlayer;
 
 export default function Lobby() {
+  const router = useRouter();
+
+  console.log(router.query.room);
   return (
     <>
       <Head>
@@ -15,7 +19,7 @@ export default function Lobby() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Room />
+        <Room roomId={router.query.room} />
       </main>
     </>
   );

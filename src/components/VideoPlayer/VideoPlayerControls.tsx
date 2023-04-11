@@ -56,6 +56,7 @@ export default function VideoPlayerControls({
             onSeekChange(value as number);
           }}
           classes={{
+            root: "p-0",
             // class name, e.g. `classes-nesting-root-x`
             thumb: "opacity-0 group-hover:opacity-100",
           }}

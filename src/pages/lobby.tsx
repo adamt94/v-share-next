@@ -8,8 +8,6 @@ export const VideoPlayerWrapper = VideoPlayer;
 
 export default function Lobby() {
   const router = useRouter();
-
-  console.log(router.query.room);
   return (
     <>
       <Head>

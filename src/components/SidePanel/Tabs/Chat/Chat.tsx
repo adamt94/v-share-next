@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import SendIcon from "@mui/icons-material/Send";
 import {
@@ -8,6 +8,7 @@ import {
   useQuery,
   useSubscription,
 } from "@apollo/client";
+import { RoomContext, UserNameContext } from "@/components/Room/Room";
 
 export const MESSAGES_BY_SEND_DATE = gql`
   query MessagesBySentDate(
@@ -98,6 +99,8 @@ export default function ChatTab() {
       client.refetchQueries({ include: ["MessagesBySentDate"] });
     },
   });
+  const { roomId } = useContext(RoomContext);
+  const { username } = useContext(UserNameContext);
 
   const {
     loading,
@@ -107,7 +110,7 @@ export default function ChatTab() {
     MESSAGES_BY_SEND_DATE,
     {
       variables: {
-        roomId: "?lobby=banter",
+        roomId: roomId,
         sortDirection: "ASC",
       },
     }
@@ -126,12 +129,11 @@ export default function ChatTab() {
       setMessage("");
       sendMessage({
         variables: {
-          input: { text: message, user: "banter", roomId: "?lobby=banter" },
+          input: { text: message, user: username, roomId: roomId },
         },
       });
     }
   };
-
   return (
     <>
       <div className="flex-grow overflow-auto flex flex-col-reverse">
@@ -140,7 +142,11 @@ export default function ChatTab() {
           <Message message="Na your fat m9" username="Scrub Lord" />
           {!loading &&
             messagesBySentDate.items.map((message, i) => (
-              <Message key={message.text + i} message={message.text} />
+              <Message
+                key={message.text + i}
+                message={message.text}
+                sender={username === message.user ? true : false}
+              />
             ))}
         </div>
       </div>

@@ -46,10 +46,6 @@ export const RoomContext = createContext<RoomContextType>({
   roomId: ''
 })
 
-type RoomProps = {
-  roomId: string
-}
-
 export default function Room({ roomId }) {
   const [showSecondColumn, setShowSecondColumn] = useState<boolean>(false)
   const [currentVideoId, setCurrentVideoId] = useState<string>('')

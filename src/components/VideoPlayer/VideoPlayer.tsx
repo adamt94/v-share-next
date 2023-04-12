@@ -1,10 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import dynamic from 'next/dynamic'
-import { CurrentVideoContext, VideoQueueContext } from '../Room/Room'
+import {
+  CurrentVideoContext,
+  RoomContext,
+  UserNameContext,
+  VideoQueueContext
+} from '../Room/Room'
 import VideoPlayerControls from './VideoPlayerControls'
-import { BaseReactPlayerProps } from 'react-player/base'
 import ReactPlayer from 'react-player'
+import { useMutation, useSubscription } from '@apollo/client'
+import { CREATE_INTERACTIONS } from '@/graphql/mutations'
+import { SUBSCRIBE_TO_LATEST_INTERACTION } from '@/graphql/subscriptions'
 // This fixed SSR hydration issue cause by react-player
 const ReactVideoPlayer = dynamic(() => import('./ReactPlayerWrapper'), {
   ssr: false
@@ -19,16 +26,48 @@ export default function VideoPlayer() {
   const [playedSeconds, setPlayedSeconds] = useState<number>(0)
   const [onSeeking, setOnSeeking] = useState<boolean>(false)
   const player = useRef<ReactPlayer>(null)
+  const { username } = useContext(UserNameContext)
+  const { roomId } = useContext(RoomContext)
+  const [setUserInteracted] = useMutation(CREATE_INTERACTIONS)
+  useSubscription(SUBSCRIBE_TO_LATEST_INTERACTION, {
+    variables: { room: roomId },
+    onSubscriptionData: ({ subscriptionData }) => {
+      const { user, input, currentVideoTime } =
+        subscriptionData.data.subscribetoLatesInteraction
+      if (user !== username) {
+        if (input === 'PLAY') {
+          setIsPlaying(true)
+        } else if (input === 'PAUSE') {
+          setIsPlaying(false)
+        } else if (input === 'SEEKTO') {
+          //could improve by checking interaction time and current time
+          player.current.seekTo(currentVideoTime, 'seconds')
+        }
+      }
+    }
+  })
 
   const seekTo = (value: number) => {
     if (!player?.current) return
     setPlayedSeconds(value)
-    player.current.seekTo(value, 'seconds')
   }
 
   const handleSeekMouseUp = (value: number) => {
     setOnSeeking(false)
     seekTo(value)
+    setUserInteracted({
+      variables: {
+        input: {
+          isPlaying: !isPlaying,
+          currentVideoTime: playedSeconds,
+          input: 'SEEKTO',
+          videoId: currentVideoId,
+          user: username,
+          room: roomId
+        }
+      }
+    })
+    player.current.seekTo(value, 'seconds')
   }
 
   const handleSeekMouseDown = () => {
@@ -41,7 +80,7 @@ export default function VideoPlayer() {
       setVideos(videos.slice(1))
     }
   }, [currentVideoId, videos])
-  console.log(currentVideoId)
+
   return (
     <section className="relative w-full flex flex-col">
       <div className="h-[calc(100vh-3rem)] overflow-hidden">
@@ -85,6 +124,19 @@ export default function VideoPlayer() {
       <VideoPlayerControls
         isPlaying={isPlaying}
         onPlaybackChange={() => {
+          setUserInteracted({
+            variables: {
+              input: {
+                isPlaying: !isPlaying,
+                currentVideoTime: playedSeconds,
+                input: !isPlaying ? 'PLAY' : 'PAUSE',
+                videoId: currentVideoId,
+                user: username,
+                room: roomId
+              }
+            }
+          })
+          console.log('onPlaybackChange')
           setIsPlaying(!isPlaying)
         }}
         volume={volume}

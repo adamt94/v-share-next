@@ -1,11 +1,11 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React from 'react'
+import { Button } from '@mui/material'
 
 //icons
-import GroupIcon from "@mui/icons-material/Group";
-import SyncIcon from "@mui/icons-material/Sync";
-import ChatIcon from "@mui/icons-material/Chat";
-import Search from "../Search/Search";
+import GroupIcon from '@mui/icons-material/Group'
+import SyncIcon from '@mui/icons-material/Sync'
+import ChatIcon from '@mui/icons-material/Chat'
+import Search from '../Search/Search'
 
 export default function App() {
   return (
@@ -51,5 +51,5 @@ export default function App() {
       </section>
       {/* <SearchPanel /> */}
     </>
-  );
+  )
 }

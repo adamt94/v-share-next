@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @import url(./theme/tokens.css);
 @import url(./theme/colors.module.css);
 @import url(./theme/typography.module.css);
 @import url(./theme/theme.light.css) (prefers-color-scheme: light);
 @import url(./theme/theme.dark.css) (prefers-color-scheme: dark);
-
 
 .h-363 {
   height: 363px;
@@ -45,8 +43,6 @@ iframe {
   width: 300px;
   background: #fff;
   border-radius: 15px;
-
-
 }
 
 .ui-slider-range-min {
@@ -63,7 +59,7 @@ iframe {
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background: #FFF;
+  background: #fff;
   position: absolute;
   margin-left: -8px;
   margin-top: -8px;

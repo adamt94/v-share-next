@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react'
 import {
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
-  Tooltip,
-} from "@mui/material";
+  Tooltip
+} from '@mui/material'
 
 //icons
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Draggable } from "react-beautiful-dnd";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Draggable } from 'react-beautiful-dnd'
 
 export type VideoItemHorizontalProps = {
-  id: string;
-  heading: string;
-  subheading: string;
-  image: string;
-  onCardClick: () => void;
-  onDelete: () => void;
-  index: number;
-};
+  id: string
+  heading: string
+  subheading: string
+  image: string
+  onCardClick: () => void
+  onDelete: () => void
+  index: number
+}
 
 export default function VideoItemHorizontal({
   id,
@@ -29,7 +29,7 @@ export default function VideoItemHorizontal({
   image,
   onCardClick,
   onDelete,
-  index,
+  index
 }: VideoItemHorizontalProps) {
   return (
     <Draggable draggableId={id} index={index}>
@@ -50,7 +50,7 @@ export default function VideoItemHorizontal({
               <div className="absolute bottom-1 right-1">
                 <button
                   onClick={() => {
-                    onDelete();
+                    onDelete()
                   }}
                   aria-label="delete"
                 >
@@ -76,5 +76,5 @@ export default function VideoItemHorizontal({
         </div>
       )}
     </Draggable>
-  );
+  )
 }

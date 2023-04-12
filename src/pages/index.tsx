@@ -1,8 +1,8 @@
-import Head from "next/head";
-import { Inter } from "next/font/google";
-import Home from "../components/Home/Home";
+import Head from 'next/head'
+import { Inter } from 'next/font/google'
+import Home from '../components/Home/Home'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export default function HomPage() {
   return (
@@ -17,5 +17,5 @@ export default function HomPage() {
         <Home />
       </main>
     </>
-  );
+  )
 }

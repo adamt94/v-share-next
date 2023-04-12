@@ -5,27 +5,27 @@ import {
   CardContent,
   CardMedia,
   IconButton,
-  Tooltip,
-} from "@mui/material";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useContext } from "react";
-import { VideoQueueContext } from "../Room/Room";
+  Tooltip
+} from '@mui/material'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
+import { useContext } from 'react'
+import { VideoQueueContext } from '../Room/Room'
 
 export type SearchCardProps = {
-  heading: string;
-  subheading: string;
-  image: string;
-  onCardClick: () => void;
-  onAddToQueue: () => void;
-};
+  heading: string
+  subheading: string
+  image: string
+  onCardClick: () => void
+  onAddToQueue: () => void
+}
 
 export default function SearchCard({
   heading,
   subheading,
   image,
   onAddToQueue,
-  onCardClick,
+  onCardClick
 }: SearchCardProps) {
   return (
     <Card
@@ -65,5 +65,5 @@ export default function SearchCard({
         </Tooltip>
       </CardActions>
     </Card>
-  );
+  )
 }

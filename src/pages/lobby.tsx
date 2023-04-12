@@ -1,13 +1,13 @@
-import Head from "next/head";
-import { Inter } from "next/font/google";
-import Room from "@/components/Room/Room";
-import VideoPlayer from "@/components/VideoPlayer/ReactPlayerWrapper";
-import { useRouter } from "next/dist/client/router";
+import Head from 'next/head'
+import { Inter } from 'next/font/google'
+import Room from '@/components/Room/Room'
+import VideoPlayer from '@/components/VideoPlayer/ReactPlayerWrapper'
+import { useRouter } from 'next/dist/client/router'
 
-export const VideoPlayerWrapper = VideoPlayer;
+export const VideoPlayerWrapper = VideoPlayer
 
 export default function Lobby() {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -20,5 +20,5 @@ export default function Lobby() {
         <Room roomId={router.query.room} />
       </main>
     </>
-  );
+  )
 }

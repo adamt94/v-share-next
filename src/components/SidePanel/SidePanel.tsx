@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import { TabPanel } from "./TabPanel";
+import React, { useState } from 'react'
+import { TabPanel } from './TabPanel'
 
 type SidePanelProps = {
-  onToggle: (isOpen: boolean) => void;
-  isOpen?: boolean;
-  style?: React.CSSProperties;
-  togglePanel?: () => void;
-};
+  onToggle: (isOpen: boolean) => void
+  isOpen?: boolean
+  style?: React.CSSProperties
+  togglePanel?: () => void
+}
 
 const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
   const togglePanel = () => {
-    onToggle(!isOpen);
-  };
+    onToggle(!isOpen)
+  }
 
   return (
     <div className="flex flex-col h-screen">
       <TabPanel
         tabs={[
           {
-            title: "Messages",
-            content: <p>testing</p>,
+            title: 'Messages',
+            content: <p>testing</p>
           },
           {
-            title: "Video Queue",
-            content: <p>testing</p>,
-          },
+            title: 'Video Queue',
+            content: <p>testing</p>
+          }
         ]}
       />
       <button
@@ -47,7 +47,7 @@ const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
         </svg>
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default SidePanel;
+export default SidePanel

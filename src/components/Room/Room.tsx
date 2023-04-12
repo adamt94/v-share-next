@@ -3,62 +3,62 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
-  useState,
-} from "react";
-import Search, { Video } from "../Search/Search";
-import SidePanel from "../SidePanel/SidePanel";
-import VideoPlayer from "../VideoPlayer/VideoPlayer";
-import { useRandomName } from "@/util/useRandomName";
+  useState
+} from 'react'
+import Search, { Video } from '../Search/Search'
+import SidePanel from '../SidePanel/SidePanel'
+import VideoPlayer from '../VideoPlayer/VideoPlayer'
+import { useRandomName } from '@/util/useRandomName'
 
 type VideoContextType = {
-  currentVideoId: string;
-  setCurrentVideoId: Dispatch<SetStateAction<string>>;
-};
+  currentVideoId: string
+  setCurrentVideoId: Dispatch<SetStateAction<string>>
+}
 
 type RoomContextType = {
-  roomId: string;
-};
+  roomId: string
+}
 
 type QueueContextType = {
-  videos: Video[];
-  setVideos: Dispatch<SetStateAction<Video[]>>;
-};
+  videos: Video[]
+  setVideos: Dispatch<SetStateAction<Video[]>>
+}
 
 type UsernameContextType = {
-  username: string;
-};
+  username: string
+}
 
 export const UserNameContext = createContext<UsernameContextType>({
-  username: "",
-});
+  username: ''
+})
 
 export const CurrentVideoContext = createContext<VideoContextType>({
-  currentVideoId: "",
-  setCurrentVideoId: () => {},
-});
+  currentVideoId: '',
+  setCurrentVideoId: () => {}
+})
 
 export const VideoQueueContext = createContext<QueueContextType>({
   videos: [],
-  setVideos: () => {},
-});
+  setVideos: () => {}
+})
 
 export const RoomContext = createContext<RoomContextType>({
-  roomId: "",
-});
+  roomId: ''
+})
 
 type RoomProps = {
-  roomId: string;
-};
+  roomId: string
+}
 
 export default function Room({ roomId }) {
-  const [showSecondColumn, setShowSecondColumn] = useState<boolean>(false);
-  const [currentVideoId, setCurrentVideoId] = useState<string>("");
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [showSecondColumn, setShowSecondColumn] = useState<boolean>(false)
+  const [currentVideoId, setCurrentVideoId] = useState<string>('')
+  const [videos, setVideos] = useState<Video[]>([])
 
-  const firstColumnClass = showSecondColumn ? "w-full" : "w-full";
-  const secondColumnClass = showSecondColumn ? "" : "hidden";
-  const username = useRandomName();
-  if (!roomId) return <div>Room not found</div>;
+  const firstColumnClass = showSecondColumn ? 'w-full' : 'w-full'
+  const secondColumnClass = showSecondColumn ? '' : 'hidden'
+  const username = useRandomName()
+  if (!roomId) return <div>Room not found</div>
 
   return (
     <UserNameContext.Provider value={{ username }}>
@@ -80,10 +80,10 @@ export default function Room({ roomId }) {
               </section>
               <button
                 onClick={() => {
-                  setShowSecondColumn(true);
+                  setShowSecondColumn(true)
                 }}
                 className={`absolute right-0 top-0 m-4 primary-container on-primary-container-text rounded-full p-2 focus:outline-none ${
-                  showSecondColumn && "hidden"
+                  showSecondColumn && 'hidden'
                 }`}
               >
                 <svg
@@ -108,7 +108,7 @@ export default function Room({ roomId }) {
                 <SidePanel
                   isOpen={showSecondColumn}
                   onToggle={(value) => {
-                    setShowSecondColumn(value);
+                    setShowSecondColumn(value)
                   }}
                 />
               </aside>
@@ -117,5 +117,5 @@ export default function Room({ roomId }) {
         </VideoQueueContext.Provider>
       </CurrentVideoContext.Provider>
     </UserNameContext.Provider>
-  );
+  )
 }

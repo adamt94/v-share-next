@@ -1,25 +1,25 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useState } from 'react'
 // weird issue with dnd React Strict mode has to be disabled, issue not been fixed due to no more support
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import VideoCard from "./VideoCard";
-import { CurrentVideoContext, VideoQueueContext } from "@/components/Room/Room";
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
+import VideoCard from './VideoCard'
+import { CurrentVideoContext, VideoQueueContext } from '@/components/Room/Room'
 
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 
 export default function VideoQueue() {
-  const { videos, setVideos } = useContext(VideoQueueContext);
-  const { setCurrentVideoId } = useContext(CurrentVideoContext);
+  const { videos, setVideos } = useContext(VideoQueueContext)
+  const { setCurrentVideoId } = useContext(CurrentVideoContext)
 
   const onDragEnd = useCallback((result: DropResult) => {
     setVideos((prevVideos) => {
-      const newVideos = [...prevVideos];
-      const [removed] = newVideos.splice(result.source.index, 1);
+      const newVideos = [...prevVideos]
+      const [removed] = newVideos.splice(result.source.index, 1)
       if (result.destination != null) {
-        newVideos.splice(result.destination.index, 0, removed);
+        newVideos.splice(result.destination.index, 0, removed)
       }
-      return newVideos;
-    });
-  }, []);
+      return newVideos
+    })
+  }, [])
 
   if (videos.length === 0)
     return (
@@ -28,7 +28,7 @@ export default function VideoQueue() {
         <AddCircleIcon className="mr-2" />
         to queue a video
       </div>
-    );
+    )
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -48,10 +48,10 @@ export default function VideoQueue() {
                   subheading={video.user}
                   image={video.thumbnail}
                   onCardClick={() => {
-                    setCurrentVideoId(video.src);
+                    setCurrentVideoId(video.src)
                   }}
                   onDelete={() => {
-                    setVideos(videos.filter((_, i) => i !== index));
+                    setVideos(videos.filter((_, i) => i !== index))
                   }}
                   index={index}
                 />
@@ -62,5 +62,5 @@ export default function VideoQueue() {
         </Droppable>
       </div>
     </DragDropContext>
-  );
+  )
 }

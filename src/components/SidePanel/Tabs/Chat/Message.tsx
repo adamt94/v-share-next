@@ -1,38 +1,38 @@
 type MessageProps = {
-  sender?: boolean;
-  message: string;
-  username?: string;
-  sentTime?: string;
-};
+  sender?: boolean
+  message: string
+  username?: string
+  sentTime?: string
+}
 export default function Message({
   sender,
   message,
   username,
-  sentTime,
+  sentTime
 }: MessageProps) {
   const getTimeAgo = (timestamp?: string) => {
     if (!timestamp) {
-      return "1 min ago";
+      return '1 min ago'
     }
-    const now = new Date();
-    const sentTime = new Date(timestamp);
+    const now = new Date()
+    const sentTime = new Date(timestamp)
     const diffInSeconds = Math.round(
       (now.getTime() - sentTime.getTime()) / 1000
-    );
+    )
 
     if (diffInSeconds < 60) {
-      return `${diffInSeconds} seconds ago`;
+      return `${diffInSeconds} seconds ago`
     } else if (diffInSeconds < 3600) {
-      const diffInMinutes = Math.floor(diffInSeconds / 60);
-      return `${diffInMinutes} ${diffInMinutes > 1 ? "mins" : "min"} ago`;
+      const diffInMinutes = Math.floor(diffInSeconds / 60)
+      return `${diffInMinutes} ${diffInMinutes > 1 ? 'mins' : 'min'} ago`
     } else if (diffInSeconds < 86400) {
-      const diffInHours = Math.floor(diffInSeconds / 3600);
-      return `${diffInHours} ${diffInHours > 1 ? "hours" : "hour"} ago`;
+      const diffInHours = Math.floor(diffInSeconds / 3600)
+      return `${diffInHours} ${diffInHours > 1 ? 'hours' : 'hour'} ago`
     } else {
-      const diffInDays = Math.floor(diffInSeconds / 86400);
-      return `${diffInDays} ${diffInDays > 1 ? "days" : "day"} ago`;
+      const diffInDays = Math.floor(diffInSeconds / 86400)
+      return `${diffInDays} ${diffInDays > 1 ? 'days' : 'day'} ago`
     }
-  };
+  }
 
   return (
     <div className="p-4">
@@ -64,5 +64,5 @@ export default function Message({
         </div>
       )}
     </div>
-  );
+  )
 }

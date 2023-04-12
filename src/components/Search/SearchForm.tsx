@@ -1,18 +1,18 @@
-import { InputBase } from "@mui/material";
-import { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+import { InputBase } from '@mui/material'
+import { useState } from 'react'
+import SearchIcon from '@mui/icons-material/Search'
 
 export type SearchFormProps = {
-  onSubmit: (value: string) => void;
-};
+  onSubmit: (value: string) => void
+}
 
 export default function SearchForm({ onSubmit }: SearchFormProps) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit(value);
-  };
+    event.preventDefault()
+    onSubmit(value)
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex justify-center gap-4">
@@ -23,13 +23,13 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
           placeholder="Search or paste a youtube link..."
           value={value}
           onChange={(event) => {
-            setValue(event.target.value);
+            setValue(event.target.value)
           }}
           fullWidth
           className="on-primary-container-text"
-          inputProps={{ "aria-label": "search" }}
+          inputProps={{ 'aria-label': 'search' }}
         />
       </div>
     </form>
-  );
+  )
 }

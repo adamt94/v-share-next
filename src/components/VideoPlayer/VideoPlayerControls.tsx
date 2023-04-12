@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { Tooltip, Slider } from "@mui/material";
-import VolumeDownIcon from "@mui/icons-material/VolumeDown";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import PersonIcon from "@mui/icons-material/Person";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
-import PauseIcon from "@mui/icons-material/Pause";
-import { convertToTime, convertToWholeSeconds } from "@/util/numberFormats";
+import React, { useEffect, useState } from 'react'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import { Tooltip, Slider } from '@mui/material'
+import VolumeDownIcon from '@mui/icons-material/VolumeDown'
+import FullscreenIcon from '@mui/icons-material/Fullscreen'
+import PersonIcon from '@mui/icons-material/Person'
+import SkipNextIcon from '@mui/icons-material/SkipNext'
+import PauseIcon from '@mui/icons-material/Pause'
+import { convertToTime, convertToWholeSeconds } from '@/util/numberFormats'
 
 type VideoPlayerControlsProps = {
-  isPlaying: boolean;
-  onPlaybackChange: () => void;
-  onVolumeChange: (value: number) => void;
-  onSeekMouseUp: (value: number) => void;
-  onSeekMouseDown: () => void;
-  onSeekChange: (value: number) => void;
-  onSeek: boolean;
-  played: number;
-  hasNext: boolean;
-  onNext: () => void;
-  duration: number;
-  elapsedTime: number;
-  onToggleFullScreen: () => void;
-  expandSeeker: boolean;
-  numberOfUsers: number;
-  volume: number;
-};
+  isPlaying: boolean
+  onPlaybackChange: () => void
+  onVolumeChange: (value: number) => void
+  onSeekMouseUp: (value: number) => void
+  onSeekMouseDown: () => void
+  onSeekChange: (value: number) => void
+  onSeek: boolean
+  played: number
+  hasNext: boolean
+  onNext: () => void
+  duration: number
+  elapsedTime: number
+  onToggleFullScreen: () => void
+  expandSeeker: boolean
+  numberOfUsers: number
+  volume: number
+}
 
 export default function VideoPlayerControls({
   isPlaying,
@@ -43,9 +43,9 @@ export default function VideoPlayerControls({
   onToggleFullScreen,
   expandSeeker,
   numberOfUsers,
-  volume,
+  volume
 }: VideoPlayerControlsProps) {
-  const elapsedTimeString = convertToWholeSeconds(elapsedTime);
+  const elapsedTimeString = convertToWholeSeconds(elapsedTime)
   return (
     <div className="surface-1 ">
       <div className="  px-2 w-full h-2 relative group">
@@ -53,19 +53,19 @@ export default function VideoPlayerControls({
           className="p-0 absolute top-0 left-0 on-secondary secondary-text group-hover:h-2"
           min={0}
           onChange={(_, value) => {
-            onSeekChange(value as number);
+            onSeekChange(value as number)
           }}
           classes={{
-            root: "p-0",
+            root: 'p-0',
             // class name, e.g. `classes-nesting-root-x`
-            thumb: "opacity-0 group-hover:opacity-100",
+            thumb: 'opacity-0 group-hover:opacity-100'
           }}
           value={elapsedTime}
           max={duration}
           onMouseDown={() => onSeekMouseDown()}
           onMouseUp={() => {}}
           onChangeCommitted={(_, value) => {
-            onSeekMouseUp(value as number);
+            onSeekMouseUp(value as number)
           }}
         />
       </div>
@@ -90,7 +90,7 @@ export default function VideoPlayerControls({
           <Slider
             className=" on-secondary secondary-text p-0"
             classes={{
-              thumb: "w-4 h-4",
+              thumb: 'w-4 h-4'
             }}
             defaultValue={volume}
             onChange={(_, value) => onVolumeChange(value as number)}
@@ -102,7 +102,7 @@ export default function VideoPlayerControls({
         </div>
         <div className="flex flex-auto on-surface-text">
           <span>
-            {convertToTime(elapsedTimeString) + "/" + convertToTime(duration)}
+            {convertToTime(elapsedTimeString) + '/' + convertToTime(duration)}
           </span>
         </div>
 
@@ -114,5 +114,5 @@ export default function VideoPlayerControls({
         </button>
       </div>
     </div>
-  );
+  )
 }

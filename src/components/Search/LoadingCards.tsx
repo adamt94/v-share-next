@@ -1,8 +1,8 @@
-import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia } from '@mui/material'
 
 type LoadingCardProps = {
-  numberOfCards: number;
-};
+  numberOfCards: number
+}
 
 export default function LoadingCards({ numberOfCards }: LoadingCardProps) {
   const cards = [...Array(numberOfCards)].map((_, index) => (
@@ -21,7 +21,7 @@ export default function LoadingCards({ numberOfCards }: LoadingCardProps) {
         </CardContent>
       </CardActionArea>
     </Card>
-  ));
+  ))
 
-  return <>{cards}</>;
+  return <>{cards}</>
 }

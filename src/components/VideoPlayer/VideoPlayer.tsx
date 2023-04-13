@@ -9,9 +9,13 @@ import {
 } from '../Room/Room'
 import VideoPlayerControls from './VideoPlayerControls'
 import ReactPlayer from 'react-player'
-import { useMutation, useSubscription } from '@apollo/client'
-import { CREATE_INTERACTIONS } from '@/graphql/mutations'
+import { useMutation, useQuery, useSubscription } from '@apollo/client'
+import {
+  CREATE_INTERACTIONS,
+  DELETE_VIDEO_LIST_ITEM
+} from '@/graphql/mutations'
 import { SUBSCRIBE_TO_LATEST_INTERACTION } from '@/graphql/subscriptions'
+import { GET_LATEST_INTERACTION } from '@/graphql/queries'
 // This fixed SSR hydration issue cause by react-player
 const ReactVideoPlayer = dynamic(() => import('./ReactPlayerWrapper'), {
   ssr: false
@@ -19,20 +23,28 @@ const ReactVideoPlayer = dynamic(() => import('./ReactPlayerWrapper'), {
 
 export default function VideoPlayer() {
   const { currentVideoId, setCurrentVideoId } = useContext(CurrentVideoContext)
+  const [isPlayerInitialized, setIsPlayerInitialized] = useState<boolean>(false)
   const { videos, setVideos } = useContext(VideoQueueContext)
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  const [volume, setVolume] = useState<number>(0.1)
+  const [volume, setVolume] = useState<number>(0)
   const [duration, setDuration] = useState<number>(0)
   const [playedSeconds, setPlayedSeconds] = useState<number>(0)
   const [onSeeking, setOnSeeking] = useState<boolean>(false)
   const player = useRef<ReactPlayer>(null)
   const { username } = useContext(UserNameContext)
   const { roomId } = useContext(RoomContext)
+  const { data: latestInteraction, loading } = useQuery(
+    GET_LATEST_INTERACTION,
+    {
+      variables: { room: roomId, limit: 1, sortDirection: 'DESC' }
+    }
+  )
+  const [deleteVideoItem] = useMutation(DELETE_VIDEO_LIST_ITEM)
   const [setUserInteracted] = useMutation(CREATE_INTERACTIONS)
   useSubscription(SUBSCRIBE_TO_LATEST_INTERACTION, {
     variables: { room: roomId },
     onSubscriptionData: ({ subscriptionData }) => {
-      const { user, input, currentVideoTime } =
+      const { user, input, currentVideoTime, videoId } =
         subscriptionData.data.subscribetoLatesInteraction
       if (user !== username) {
         if (input === 'PLAY') {
@@ -42,10 +54,29 @@ export default function VideoPlayer() {
         } else if (input === 'SEEKTO') {
           //could improve by checking interaction time and current time
           player.current.seekTo(currentVideoTime, 'seconds')
+        } else if (input === 'NEXT' && currentVideoId == '') {
+          setCurrentVideoId(videoId)
         }
       }
     }
   })
+
+  useEffect(() => {
+    const data = latestInteraction?.latestInteraction?.items[0]
+    console.log(data)
+    if (data && currentVideoId == '') {
+      setCurrentVideoId(data.videoId)
+    }
+    if (data && isPlayerInitialized && player.current) {
+      setIsPlaying(data.isPlaying)
+      const createat = new Date(data.createdAt)
+      const currentTime = new Date()
+      const differenceInSeconds =
+        (currentTime.getTime() - createat.getTime()) / 1000
+      const totalSeekTime = data.currentVideoTime + differenceInSeconds
+      player.current.seekTo(totalSeekTime, 'seconds')
+    }
+  }, [latestInteraction, isPlayerInitialized])
 
   const seekTo = (value: number) => {
     if (!player?.current) return
@@ -58,7 +89,7 @@ export default function VideoPlayer() {
     setUserInteracted({
       variables: {
         input: {
-          isPlaying: !isPlaying,
+          isPlaying: isPlaying,
           currentVideoTime: playedSeconds,
           input: 'SEEKTO',
           videoId: currentVideoId,
@@ -75,7 +106,20 @@ export default function VideoPlayer() {
   }
 
   useEffect(() => {
-    if (!currentVideoId && videos.length) {
+    if (currentVideoId == 'NEXT_VIDEO' && videos.length) {
+      setUserInteracted({
+        variables: {
+          input: {
+            isPlaying: isPlaying,
+            currentVideoTime: 0,
+            input: 'NEXT',
+            videoId: videos[0].src,
+            user: username,
+            room: roomId
+          }
+        }
+      })
+      deleteVideoItem({ variables: { input: { id: videos[0].id } } })
       setCurrentVideoId(videos[0].src)
       setVideos(videos.slice(1))
     }
@@ -90,10 +134,10 @@ export default function VideoPlayer() {
             width: '100%',
             height: '100%',
             onEnded: () => {
-              setCurrentVideoId('')
+              setCurrentVideoId('NEXT_VIDEO')
             },
             onReady: () => {
-              setIsPlaying(true)
+              setIsPlayerInitialized(true)
             },
             controls: false,
             playing: isPlaying,

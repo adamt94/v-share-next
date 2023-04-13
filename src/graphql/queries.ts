@@ -100,3 +100,37 @@ export const GET_VIDEO_LIST_BY_RANK = gql`
   }
 `;
 
+
+export const GET_LATEST_INTERACTION = gql`
+  query LatestInteraction(
+    $room: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelInteractionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    latestInteraction(
+      room: $room
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        room
+        input
+        createdAt
+        user
+        currentVideoTime
+        isPlaying
+        videoId
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+

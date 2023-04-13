@@ -1,13 +1,20 @@
 import { FormEvent, useContext, useState } from 'react'
-import { useQuery, gql } from '@apollo/client'
+import { useQuery, gql, useMutation } from '@apollo/client'
 import SearchCard from './SearchCard'
 import SearchForm from './SearchForm'
 import useSearch from './useSearch'
 import LoadingCards from './LoadingCards'
-import { CurrentVideoContext, VideoQueueContext } from '../Room/Room'
+import {
+  CurrentVideoContext,
+  RoomContext,
+  UserNameContext,
+  VideoQueueContext
+} from '../Room/Room'
 import { GET_POPULAR_VIDEO_QUERY } from '@/graphql/queries'
+import { CREATE_VIDEO_LIST_ITEM } from '@/graphql/mutations'
 
 export type Video = {
+  id: string
   title: string
   thumbnail: string
   src: string
@@ -30,6 +37,11 @@ export default function Search() {
   const [searchValue, setSearchValue] = useState('')
   const { setCurrentVideoId } = useContext(CurrentVideoContext)
   const { videos, setVideos } = useContext(VideoQueueContext)
+  const { roomId } = useContext(RoomContext)
+  const { username } = useContext(UserNameContext)
+
+  const [addVideoToQueue] = useMutation(CREATE_VIDEO_LIST_ITEM)
+
   const {
     videos: searchVideos,
     loading: searchLoading,
@@ -63,14 +75,31 @@ export default function Search() {
       <div className="flex flex-wrap justify-center py-10">
         {(searchVideos || getMostPopularVideos)?.map(
           (
-            video: Video // use the 'Video' type here
+            video: Video,
+            index: number // use the 'Video' type here
           ) => (
             <SearchCard
               key={video.src}
               heading={video.title}
               subheading={video.user}
               image={video.thumbnail}
-              onAddToQueue={() => setVideos([...videos, video])}
+              onAddToQueue={() => {
+                setVideos([...videos, video]),
+                  addVideoToQueue({
+                    variables: {
+                      input: {
+                        room: roomId,
+                        description: video.title,
+                        channelTitle: video.user,
+                        title: video.title,
+                        src: video.src,
+                        imgurl: video.thumbnail,
+                        rank: videos.length,
+                        user: username
+                      }
+                    }
+                  })
+              }}
               onCardClick={() => {
                 setCurrentVideoId(video.src)
               }}

@@ -59,3 +59,44 @@ export const MESSAGES_BY_SEND_DATE = gql`
     }
   }
 `
+
+export const GET_VIDEO_LIST_BY_RANK = gql`
+  query VideoListByRank(
+    $room: String
+    $rank: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelVideoListFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    videoListByRank(
+      room: $room
+      rank: $rank
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        room
+        videoId
+        description
+        title
+        channelTitle
+        imgurl
+        rank
+        platform
+        src
+        thumbnail
+        user
+        live
+        started_at
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+

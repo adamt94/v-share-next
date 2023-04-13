@@ -1,14 +1,34 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 // weird issue with dnd React Strict mode has to be disabled, issue not been fixed due to no more support
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
 import VideoCard from './VideoCard'
-import { CurrentVideoContext, VideoQueueContext } from '@/components/Room/Room'
+import {
+  CurrentVideoContext,
+  RoomContext,
+  UserNameContext,
+  VideoQueueContext
+} from '@/components/Room/Room'
 
 import AddCircleIcon from '@mui/icons-material/AddCircle'
+import { useMutation, useQuery, useSubscription } from '@apollo/client'
+import { GET_VIDEO_LIST_BY_RANK } from '@/graphql/queries'
+import { SUBSCRIBE_TO_VIDEO_LIST } from '@/graphql/subscriptions'
+import { DELETE_VIDEO_LIST_ITEM } from '@/graphql/mutations'
 
 export default function VideoQueue() {
   const { videos, setVideos } = useContext(VideoQueueContext)
   const { setCurrentVideoId } = useContext(CurrentVideoContext)
+  const { roomId } = useContext(RoomContext)
+  const { data } = useQuery(GET_VIDEO_LIST_BY_RANK, {
+    variables: { room: roomId }
+  })
+  const [deleteVideoItem] = useMutation(DELETE_VIDEO_LIST_ITEM)
+  useSubscription(SUBSCRIBE_TO_VIDEO_LIST, {
+    variables: { room: roomId },
+    onSubscriptionData: ({ client, subscriptionData }) => {
+      client.refetchQueries({ include: ['VideoListByRank'] })
+    }
+  })
 
   const onDragEnd = useCallback((result: DropResult) => {
     setVideos((prevVideos) => {
@@ -20,6 +40,20 @@ export default function VideoQueue() {
       return newVideos
     })
   }, [])
+
+  useEffect(() => {
+    const videoListByRank = data?.videoListByRank?.items
+    if (videoListByRank) {
+      setVideos(
+        videoListByRank.map((video) => ({
+          id: video.id,
+          title: video.title,
+          thumbnail: video.imgurl,
+          src: video.src
+        }))
+      )
+    }
+  }, [data])
 
   if (videos.length === 0)
     return (
@@ -51,6 +85,13 @@ export default function VideoQueue() {
                     setCurrentVideoId(video.src)
                   }}
                   onDelete={() => {
+                    deleteVideoItem({
+                      variables: {
+                        input: {
+                          id: video.id
+                        }
+                      }
+                    })
                     setVideos(videos.filter((_, i) => i !== index))
                   }}
                   index={index}

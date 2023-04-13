@@ -29,3 +29,26 @@ export const SUBSCRIBE_TO_LATEST_INTERACTION = gql `
     }
   }
 `;
+
+export const SUBSCRIBE_TO_VIDEO_LIST = gql `
+  subscription SubscribetoVideoList($room: String!) {
+    subscribetoVideoList(room: $room) {
+      id
+      room
+      videoId
+      description
+      title
+      channelTitle
+      imgurl
+      rank
+      platform
+      src
+      thumbnail
+      user
+      live
+      started_at
+      createdAt
+      updatedAt
+    }
+  }
+`;

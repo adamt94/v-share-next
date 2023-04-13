@@ -33,3 +33,81 @@ export const CREATE_INTERACTIONS = gql `
     }
   }
 `;
+
+export const UPDATE_VIDEO_LIST = gql`
+  mutation UpdateVideoList(
+    $input: UpdateVideoListInput!
+    $condition: ModelVideoListConditionInput
+  ) {
+    updateVideoList(input: $input, condition: $condition) {
+      id
+      room
+      videoId
+      description
+      title
+      channelTitle
+      imgurl
+      rank
+      platform
+      src
+      thumbnail
+      user
+      live
+      started_at
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const CREATE_VIDEO_LIST_ITEM = gql`
+  mutation CreateVideoList(
+    $input: CreateVideoListInput!
+    $condition: ModelVideoListConditionInput
+  ) {
+    createVideoList(input: $input, condition: $condition) {
+      id
+      room
+      videoId
+      description
+      title
+      channelTitle
+      imgurl
+      rank
+      platform
+      src
+      thumbnail
+      user
+      live
+      started_at
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_VIDEO_LIST_ITEM = gql`
+  mutation DeleteVideoList(
+    $input: DeleteVideoListInput!
+    $condition: ModelVideoListConditionInput
+  ) {
+    deleteVideoList(input: $input, condition: $condition) {
+      id
+      room
+      videoId
+      description
+      title
+      channelTitle
+      imgurl
+      rank
+      platform
+      src
+      thumbnail
+      user
+      live
+      started_at
+      createdAt
+      updatedAt
+    }
+  }
+`;

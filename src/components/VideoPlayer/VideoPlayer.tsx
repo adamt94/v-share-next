@@ -158,7 +158,7 @@ export default function VideoPlayer() {
             },
             config: {
               youtube: {
-                playerVars: { controls: 0 }
+                playerVars: { controls: 0, showinfo: 1 }
               }
             },
             onDuration: (data) => setDuration(data)

@@ -13,7 +13,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { useMutation, useQuery, useSubscription } from '@apollo/client'
 import { GET_VIDEO_LIST_BY_RANK } from '@/graphql/queries'
 import { SUBSCRIBE_TO_VIDEO_LIST } from '@/graphql/subscriptions'
-import { DELETE_VIDEO_LIST_ITEM } from '@/graphql/mutations'
+import { DELETE_VIDEO_LIST_ITEM, UPDATE_VIDEO_LIST } from '@/graphql/mutations'
 
 export default function VideoQueue() {
   const { videos, setVideos } = useContext(VideoQueueContext)
@@ -22,6 +22,7 @@ export default function VideoQueue() {
   const { data } = useQuery(GET_VIDEO_LIST_BY_RANK, {
     variables: { room: roomId }
   })
+  const [updateVideoList] = useMutation(UPDATE_VIDEO_LIST)
   const [deleteVideoItem] = useMutation(DELETE_VIDEO_LIST_ITEM)
   useSubscription(SUBSCRIBE_TO_VIDEO_LIST, {
     variables: { room: roomId },
@@ -36,7 +37,20 @@ export default function VideoQueue() {
       const [removed] = newVideos.splice(result.source.index, 1)
       if (result.destination != null) {
         newVideos.splice(result.destination.index, 0, removed)
+        newVideos.forEach((video, index) => {
+          if (prevVideos[index].rank !== index) {
+            updateVideoList({
+              variables: {
+                input: {
+                  id: video.id,
+                  rank: index
+                }
+              }
+            })
+          }
+        })
       }
+
       return newVideos
     })
   }, [])
@@ -49,7 +63,8 @@ export default function VideoQueue() {
           id: video.id,
           title: video.title,
           thumbnail: video.imgurl,
-          src: video.src
+          src: video.src,
+          rank: video.rank
         }))
       )
     }

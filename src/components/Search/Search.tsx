@@ -19,6 +19,7 @@ export type Video = {
   thumbnail: string
   src: string
   user: string
+  rank: number
 }
 
 type Data = {

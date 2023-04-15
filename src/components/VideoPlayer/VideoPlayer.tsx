@@ -48,6 +48,9 @@ export default function VideoPlayer() {
         subscriptionData.data.subscribetoLatesInteraction
       if (user !== username) {
         if (input === 'PLAY') {
+          if (currentVideoId !== videoId) {
+            setCurrentVideoId(videoId)
+          }
           setIsPlaying(true)
         } else if (input === 'PAUSE') {
           setIsPlaying(false)
@@ -127,7 +130,12 @@ export default function VideoPlayer() {
 
   return (
     <section className="relative w-full flex flex-col">
-      <div className="h-[calc(100vh-3rem)] overflow-hidden">
+      <div
+        className="h-[calc(100vh-3rem)] overflow-hidden"
+        onClick={() => {
+          console.log('test')
+        }}
+      >
         <ReactVideoPlayer
           playerRef={player}
           playerProps={{
@@ -180,7 +188,6 @@ export default function VideoPlayer() {
               }
             }
           })
-          console.log('onPlaybackChange')
           setIsPlaying(!isPlaying)
         }}
         volume={volume}

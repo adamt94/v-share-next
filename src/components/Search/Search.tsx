@@ -11,7 +11,10 @@ import {
   VideoQueueContext
 } from '../Room/Room'
 import { GET_POPULAR_VIDEO_QUERY } from '@/graphql/queries'
-import { CREATE_VIDEO_LIST_ITEM } from '@/graphql/mutations'
+import {
+  CREATE_INTERACTIONS,
+  CREATE_VIDEO_LIST_ITEM
+} from '@/graphql/mutations'
 
 export type Video = {
   id: string
@@ -42,6 +45,7 @@ export default function Search() {
   const { username } = useContext(UserNameContext)
 
   const [addVideoToQueue] = useMutation(CREATE_VIDEO_LIST_ITEM)
+  const [setUserInteracted] = useMutation(CREATE_INTERACTIONS)
 
   const {
     videos: searchVideos,
@@ -102,6 +106,18 @@ export default function Search() {
                   })
               }}
               onCardClick={() => {
+                setUserInteracted({
+                  variables: {
+                    input: {
+                      isPlaying: true,
+                      currentVideoTime: 0,
+                      input: 'PLAY',
+                      videoId: video.src,
+                      user: username,
+                      room: roomId
+                    }
+                  }
+                })
                 setCurrentVideoId(video.src)
               }}
             />

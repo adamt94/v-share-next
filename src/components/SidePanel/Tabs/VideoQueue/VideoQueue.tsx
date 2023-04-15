@@ -13,12 +13,18 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { useMutation, useQuery, useSubscription } from '@apollo/client'
 import { GET_VIDEO_LIST_BY_RANK } from '@/graphql/queries'
 import { SUBSCRIBE_TO_VIDEO_LIST } from '@/graphql/subscriptions'
-import { DELETE_VIDEO_LIST_ITEM, UPDATE_VIDEO_LIST } from '@/graphql/mutations'
+import {
+  CREATE_INTERACTIONS,
+  DELETE_VIDEO_LIST_ITEM,
+  UPDATE_VIDEO_LIST
+} from '@/graphql/mutations'
 
 export default function VideoQueue() {
   const { videos, setVideos } = useContext(VideoQueueContext)
   const { setCurrentVideoId } = useContext(CurrentVideoContext)
   const { roomId } = useContext(RoomContext)
+  const { username } = useContext(UserNameContext)
+  const [setUserInteracted] = useMutation(CREATE_INTERACTIONS)
   const { data } = useQuery(GET_VIDEO_LIST_BY_RANK, {
     variables: { room: roomId }
   })
@@ -97,6 +103,18 @@ export default function VideoQueue() {
                   subheading={video.user}
                   image={video.thumbnail}
                   onCardClick={() => {
+                    setUserInteracted({
+                      variables: {
+                        input: {
+                          isPlaying: true,
+                          currentVideoTime: 0,
+                          input: 'PLAY',
+                          videoId: video.src,
+                          user: username,
+                          room: roomId
+                        }
+                      }
+                    })
                     setCurrentVideoId(video.src)
                   }}
                   onDelete={() => {

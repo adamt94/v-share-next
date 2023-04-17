@@ -111,7 +111,7 @@ export default function Search() {
                     input: {
                       isPlaying: true,
                       currentVideoTime: 0,
-                      input: 'PLAY',
+                      input: 'NEXT',
                       videoId: video.src,
                       user: username,
                       room: roomId

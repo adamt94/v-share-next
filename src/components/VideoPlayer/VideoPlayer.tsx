@@ -57,7 +57,7 @@ export default function VideoPlayer() {
         } else if (input === 'SEEKTO') {
           //could improve by checking interaction time and current time
           player.current.seekTo(currentVideoTime, 'seconds')
-        } else if (input === 'NEXT' && currentVideoId == '') {
+        } else if (input === 'NEXT') {
           setCurrentVideoId(videoId)
         }
       }
@@ -107,6 +107,7 @@ export default function VideoPlayer() {
     setOnSeeking(true)
   }
 
+  // WHEN NEXT VIDEO IS PLAYED
   useEffect(() => {
     if (currentVideoId == 'NEXT_VIDEO' && videos.length) {
       setUserInteracted({

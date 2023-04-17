@@ -67,7 +67,7 @@ export default function Room({ roomId }) {
           <RoomContext.Provider value={{ roomId }}>
             <div className="flex h-screen flex-col sm:flex-row">
               <section
-                className={`text-center flex flex-col gap-8 overflow-auto w-full ${firstColumnMobile}`}
+                className={`text-center flex flex-col gap-8 overflow-auto w-full ${firstColumnMobile} sm:h-full`}
                 id="left-column"
               >
                 <VideoPlayer />

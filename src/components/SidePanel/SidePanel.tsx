@@ -14,7 +14,7 @@ const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full sm:h-screen">
       <TabPanel
         tabs={[
           {
@@ -29,7 +29,7 @@ const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
       />
       <button
         onClick={togglePanel}
-        className="absolute right-0 top-0 m-2 surface-variant on-surface-variant-text rounded-full focus:outline-none"
+        className="absolute right-0  bottom-0 sm:top-0 sm:bottom-auto m-2 surface-variant on-surface-variant-text rounded-full focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

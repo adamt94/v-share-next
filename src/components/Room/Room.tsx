@@ -47,12 +47,14 @@ export const RoomContext = createContext<RoomContextType>({
 })
 
 export default function Room({ roomId }) {
-  const [showSecondColumn, setShowSecondColumn] = useState<boolean>(false)
+  const [showSecondColumn, setShowSecondColumn] = useState<boolean>(true)
   const [currentVideoId, setCurrentVideoId] = useState<string>('')
   const [videos, setVideos] = useState<Video[]>([])
 
   const firstColumnClass = showSecondColumn ? 'w-full' : 'w-full'
   const secondColumnClass = showSecondColumn ? '' : 'hidden'
+  const firstColumnMobile = showSecondColumn ? 'h-2/5' : 'h-full'
+  const secondColumnMobile = showSecondColumn ? 'h-3/5' : ''
   const username = useRandomName()
   if (!roomId) return <div>Room not found</div>
 
@@ -63,14 +65,14 @@ export default function Room({ roomId }) {
       >
         <VideoQueueContext.Provider value={{ videos, setVideos }}>
           <RoomContext.Provider value={{ roomId }}>
-            <div className="flex h-screen">
+            <div className="flex h-screen flex-col sm:flex-row">
               <section
-                className={`text-center flex flex-col gap-8 overflow-auto ${firstColumnClass}`}
+                className={`text-center flex flex-col gap-8 overflow-auto w-full ${firstColumnMobile}`}
                 id="left-column"
               >
                 <VideoPlayer />
 
-                <section className="p-0  py-5 sm:p-5">
+                <section className="p-0  py-5 max-overscroll-y  sm:p-5 ">
                   <Search />
                 </section>
               </section>
@@ -78,7 +80,7 @@ export default function Room({ roomId }) {
                 onClick={() => {
                   setShowSecondColumn(true)
                 }}
-                className={`absolute right-0 top-0 m-4 primary-container on-primary-container-text rounded-full p-2 focus:outline-none ${
+                className={`absolute right-0 bottom-0 m-4 sm:top-0 sm:bottom-auto primary-container on-primary-container-text rounded-full p-2 focus:outline-none ${
                   showSecondColumn && 'hidden'
                 }`}
               >
@@ -98,7 +100,7 @@ export default function Room({ roomId }) {
                 </svg>
               </button>
               <aside
-                className={`${secondColumnClass} overflow-hidden hide-scroll`}
+                className={`${secondColumnClass} overflow-hidden hide-scroll ${secondColumnMobile} sm:h-full`}
                 id="right-column"
               >
                 <SidePanel

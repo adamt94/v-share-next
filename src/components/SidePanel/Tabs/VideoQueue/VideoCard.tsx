@@ -67,8 +67,17 @@ export default function VideoItemHorizontal({
                   title="heading"
                   className=" h-full w-full relative"
                 />
-                <div className=" opacity-0 absolute">
-                  <PlayArrowIcon style={{ fontSize: 90 }} color="primary" />
+                <div className="inset-0 absolute h-full w-full flex primary justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-500">
+                  <PlayArrowIcon
+                    style={{ fontSize: 90 }}
+                    className="primary-text"
+                  />
+                </div>
+                <div className="inset-0 absolute h-full w-full flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-500">
+                  <PlayArrowIcon
+                    style={{ fontSize: 90 }}
+                    className="primary-text"
+                  />
                 </div>
               </div>
             </CardActionArea>

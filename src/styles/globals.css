@@ -8,6 +8,7 @@
 @import url(./theme/theme.light.css) (prefers-color-scheme: light);
 @import url(./theme/theme.dark.css) (prefers-color-scheme: dark);
 
+
 .h-363 {
   height: 363px;
 }
@@ -65,4 +66,19 @@ iframe {
   margin-top: -8px;
   cursor: pointer;
   outline: none;
+}
+.h-5625 {
+  height: 56.25vw;
+}
+
+@media (max-width: 640px) {
+  .max-overscroll-y {
+    overflow-y: auto;
+  }
+
+
+  #right-column {
+    width: 100%;
+  }
+
 }

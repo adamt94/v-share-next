@@ -66,7 +66,6 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     const data = latestInteraction?.latestInteraction?.items[0]
-    console.log(data)
     if (data && currentVideoId == '') {
       setCurrentVideoId(data.videoId)
     }
@@ -131,7 +130,7 @@ export default function VideoPlayer() {
   return (
     <section className="relative w-full flex flex-col">
       <div
-        className="h-[calc(100vh-3rem)] overflow-hidden"
+        className="h-5625 max-h-[calc(100vh-3rem)] overflow-hidden pointer-events-none"
         onClick={() => {
           console.log('test')
         }}
@@ -156,7 +155,6 @@ export default function VideoPlayer() {
               objectFit: 'contain'
             },
             onSeek: () => {
-              console.log('onSeek')
               setOnSeeking(false)
             },
             onProgress: (data) => {

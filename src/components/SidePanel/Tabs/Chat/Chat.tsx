@@ -5,23 +5,34 @@ import { useMutation, useQuery, useSubscription } from '@apollo/client'
 import { RoomContext, UserNameContext } from '@/components/Room/Room'
 import {
   MESSAGES_BY_SEND_DATE,
+  MessageQuery,
   MessagesBySentDateQueryResult,
   MessagesBySentDateQueryVariables
 } from '@/graphql/queries'
 import { CREATE_MESSAGE } from '@/graphql/mutations'
-import { ON_CREATE_MESSAGE } from '@/graphql/subscriptions'
+import { SUBSCRIBE_TO_MESSAGES } from '@/graphql/subscriptions'
+
+type OnCreateSubscription = {
+  onCreateMessage: MessageQuery
+}
 
 export default function ChatTab() {
   const [message, setMessage] = useState('')
-  const [messageList, setMessageList] = useState([])
+  const [messageList, setMessageList] = useState<MessageQuery[]>([])
   const [sendMessage] = useMutation(CREATE_MESSAGE)
-  useSubscription(ON_CREATE_MESSAGE, {
-    onSubscriptionData: ({ client }) => {
-      client.refetchQueries({ include: ['MessagesBySentDate'] })
-    }
-  })
+
   const { roomId } = useContext(RoomContext)
   const { username } = useContext(UserNameContext)
+
+  useSubscription<OnCreateSubscription>(SUBSCRIBE_TO_MESSAGES, {
+    variables: { room: roomId },
+    onData: ({ client, data }) => {
+      console.log(data)
+      if (username !== data.data.onCreateMessage.user) {
+        setMessageList([...messageList, data.data.onCreateMessage])
+      }
+    }
+  })
 
   const {
     loading,
@@ -37,16 +48,13 @@ export default function ChatTab() {
     }
   )
 
-  // useEffect(() => {
-  //   if (messageSendData && messageSendData.onCreateMessage) {
-  //     setMessageList([...messageList, messageSendData.onCreateMessage]);
-  //   }
-  // }, [messageSendData, messageList]);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (message.trim() !== '') {
-      setMessageList([...messageList, message])
+      setMessageList([
+        ...messageList,
+        { text: message, user: username, roomId: roomId }
+      ])
       setMessage('')
       sendMessage({
         variables: {
@@ -55,14 +63,19 @@ export default function ChatTab() {
       })
     }
   }
+
+  useEffect(() => {
+    if (messagesBySentDate) {
+      setMessageList(messagesBySentDate.items)
+    }
+  }, [messagesBySentDate])
+
   return (
     <>
       <div className="flex-grow overflow-auto flex flex-col-reverse">
         <div className="flex flex-col">
-          <Message message="You want some ill give it to ya" sender />
-          <Message message="Na your fat m9" username="Scrub Lord" />
           {!loading &&
-            messagesBySentDate.items.map((message, i) => (
+            messageList.map((message, i) => (
               <Message
                 key={message.text + i}
                 message={message.text}

@@ -37,7 +37,7 @@ const TabButton = ({ index, onClick, label, style, icon }: TabButtonProps) => {
   )
 }
 
-export const TabPanel = ({ defaultTab = 2, tabs }: TabPanelProps) => {
+export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
   const [activeTab, setActiveTab] = useState(defaultTab)
 
   return (

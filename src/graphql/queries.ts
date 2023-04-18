@@ -23,14 +23,15 @@ export type MessagesBySentDateQueryVariables = {
   limit?: number
   nextToken?: string
 }
-export type Message = {
+export type MessageQuery = {
   user: string
   text: string
+  roomId?: string
 }
 
 export type MessagesBySentDateQueryResult = {
   messagesBySentDate: {
-    items: Message[]
+    items: MessageQuery[]
     nextToken?: string
   }
 }

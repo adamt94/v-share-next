@@ -6,8 +6,11 @@ import GroupIcon from '@mui/icons-material/Group'
 import SyncIcon from '@mui/icons-material/Sync'
 import ChatIcon from '@mui/icons-material/Chat'
 import Search from '../Search/Search'
+import Link from 'next/link'
+import { generateRandomString } from '@/util/numberFormats'
 
 export default function App() {
+  const roomId = generateRandomString(8)
   return (
     <>
       {/* {!!isALobby && userName && <Video numberOfUsers={numberOfUsers} />} */}
@@ -36,13 +39,15 @@ export default function App() {
               To start click the button bellow and share the url with friends.
             </p>
           </div>
-          <Button
-            variant="outlined"
-            type="submit"
-            className=" w-48 primary-text primary-border hover:primary-border"
-          >
-            Create New Room
-          </Button>
+          <Link href={`/lobby?room=${roomId}`}>
+            <Button
+              variant="outlined"
+              type="submit"
+              className=" w-48 primary-text primary-border hover:primary-border"
+            >
+              Create New Room
+            </Button>
+          </Link>
         </ul>
       </section>
 

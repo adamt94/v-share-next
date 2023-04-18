@@ -1,21 +1,20 @@
 import { gql } from '@apollo/client'
 
 export const ON_CREATE_MESSAGE = gql`
-  subscription OnCreateMessage {
+subscription OnCreateMessage {
     onCreateMessage {
-      id
       createdAt
-      user
-      text
+      id
       roomId
+      text
       updatedAt
-      fi
+      user
     }
   }
 `
 
 export const SUBSCRIBE_TO_LATEST_INTERACTION = gql `
-  subscription SubscribetoLatesInteraction($room: String!) {
+  subscription subscribetoLatesInteraction($room: String!) {
     subscribetoLatesInteraction(room: $room) {
       id
       room
@@ -52,3 +51,15 @@ export const SUBSCRIBE_TO_VIDEO_LIST = gql `
     }
   }
 `;
+
+
+export const SUBSCRIBE_TO_MESSAGES = gql`
+  subscription SubscribeToMessages($roomId: String!) {
+    subscribeToMessages(roomId: $roomId) {
+      roomId
+      text
+      user
+    }
+  }
+`;
+  

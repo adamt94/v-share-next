@@ -21,6 +21,15 @@ const ReactVideoPlayer = dynamic(() => import('./ReactPlayerWrapper'), {
   ssr: false
 })
 
+type InteractionData = {
+  subscribetoLatesInteraction: {
+    user: string
+    input: string
+    currentVideoTime: number
+    videoId: string
+  }
+}
+
 export default function VideoPlayer() {
   const { currentVideoId, setCurrentVideoId } = useContext(CurrentVideoContext)
   const [isPlayerInitialized, setIsPlayerInitialized] = useState<boolean>(false)
@@ -41,11 +50,11 @@ export default function VideoPlayer() {
   )
   const [deleteVideoItem] = useMutation(DELETE_VIDEO_LIST_ITEM)
   const [setUserInteracted] = useMutation(CREATE_INTERACTIONS)
-  useSubscription(SUBSCRIBE_TO_LATEST_INTERACTION, {
+  useSubscription<InteractionData>(SUBSCRIBE_TO_LATEST_INTERACTION, {
     variables: { room: roomId },
-    onSubscriptionData: ({ subscriptionData }) => {
+    onData: ({ data }) => {
       const { user, input, currentVideoTime, videoId } =
-        subscriptionData.data.subscribetoLatesInteraction
+        data.data.subscribetoLatesInteraction
       if (user !== username) {
         if (input === 'PLAY') {
           if (currentVideoId !== videoId) {

@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { MessageQuery, VideoListQuery } from './queries';
 
 export const ON_CREATE_MESSAGE = gql`
 subscription OnCreateMessage {
@@ -29,6 +30,10 @@ export const SUBSCRIBE_TO_LATEST_INTERACTION = gql `
   }
 `;
 
+export type VideoListSubscriptionResult = {
+    subscribetoVideoList: VideoListQuery
+}
+
 export const SUBSCRIBE_TO_VIDEO_LIST = gql `
   subscription SubscribetoVideoList($room: String!) {
     subscribetoVideoList(room: $room) {
@@ -52,7 +57,9 @@ export const SUBSCRIBE_TO_VIDEO_LIST = gql `
   }
 `;
 
-
+export type MessagesSubscriptionResult = {
+    subscribeToMessages: MessageQuery
+}
 export const SUBSCRIBE_TO_MESSAGES = gql`
   subscription SubscribeToMessages($roomId: String!) {
     subscribeToMessages(roomId: $roomId) {

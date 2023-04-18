@@ -26,13 +26,14 @@ export default function VideoQueue() {
   const { username } = useContext(UserNameContext)
   const [setUserInteracted] = useMutation(CREATE_INTERACTIONS)
   const { data } = useQuery(GET_VIDEO_LIST_BY_RANK, {
+    fetchPolicy: 'no-cache',
     variables: { room: roomId }
   })
   const [updateVideoList] = useMutation(UPDATE_VIDEO_LIST)
   const [deleteVideoItem] = useMutation(DELETE_VIDEO_LIST_ITEM)
   useSubscription(SUBSCRIBE_TO_VIDEO_LIST, {
     variables: { room: roomId },
-    onSubscriptionData: ({ client, subscriptionData }) => {
+    onData: ({ client, data }) => {
       client.refetchQueries({ include: ['VideoListByRank'] })
     }
   })

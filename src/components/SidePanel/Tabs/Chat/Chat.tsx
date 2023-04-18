@@ -10,11 +10,11 @@ import {
   MessagesBySentDateQueryVariables
 } from '@/graphql/queries'
 import { CREATE_MESSAGE } from '@/graphql/mutations'
-import { SUBSCRIBE_TO_MESSAGES } from '@/graphql/subscriptions'
+import {
+  MessagesSubscriptionResult,
+  SUBSCRIBE_TO_MESSAGES
+} from '@/graphql/subscriptions'
 
-type OnCreateSubscription = {
-  onCreateMessage: MessageQuery
-}
 
 export default function ChatTab() {
   const [message, setMessage] = useState('')
@@ -24,12 +24,12 @@ export default function ChatTab() {
   const { roomId } = useContext(RoomContext)
   const { username } = useContext(UserNameContext)
 
-  useSubscription<OnCreateSubscription>(SUBSCRIBE_TO_MESSAGES, {
-    variables: { room: roomId },
+  useSubscription<MessagesSubscriptionResult>(SUBSCRIBE_TO_MESSAGES, {
+    variables: { roomId: roomId },
     onData: ({ client, data }) => {
       console.log(data)
-      if (username !== data.data.onCreateMessage.user) {
-        setMessageList([...messageList, data.data.onCreateMessage])
+      if (username !== data.data.subscribeToMessages.user) {
+        setMessageList([...messageList, data.data.subscribeToMessages])
       }
     }
   })

@@ -1,5 +1,19 @@
 import { gql } from '@apollo/client'
 
+export type VideoListQuery = {
+    id: string
+    room: string
+    videoId: string
+    description: string
+    title: string
+    channelTitle: string
+    imgurl: string
+    rank: number
+    platform: string
+    src: string
+}
+
+
 export const GET_POPULAR_VIDEO_QUERY = gql`
   query popularVideos {
     getMostPopularVideos {
@@ -35,6 +49,7 @@ export type MessagesBySentDateQueryResult = {
     nextToken?: string
   }
 }
+
 export const MESSAGES_BY_SEND_DATE = gql`
   query MessagesBySentDate(
     $roomId: String

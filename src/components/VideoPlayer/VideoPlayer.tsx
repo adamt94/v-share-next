@@ -150,6 +150,7 @@ export default function VideoPlayer() {
           playerProps={{
             width: '100%',
             height: '100%',
+            muted: volume === 0,
             onEnded: () => {
               setCurrentVideoId('NEXT_VIDEO')
             },

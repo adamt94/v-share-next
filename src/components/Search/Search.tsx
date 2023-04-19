@@ -58,7 +58,7 @@ export default function Search() {
 
   if (loading || searchLoading)
     return (
-      <>
+      <div className="mt-6">
         <SearchForm
           onSubmit={(value) => {
             setSearchValue(value)
@@ -67,10 +67,10 @@ export default function Search() {
         <div className="flex flex-wrap justify-center py-10">
           <LoadingCards numberOfCards={6} />
         </div>
-      </>
+      </div>
     )
   return (
-    <>
+    <div className="mt-6">
       <SearchForm
         onSubmit={(value) => {
           setSearchValue(value)
@@ -124,6 +124,6 @@ export default function Search() {
           )
         )}
       </div>
-    </>
+    </div>
   )
 }

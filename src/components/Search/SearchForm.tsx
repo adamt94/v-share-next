@@ -15,8 +15,8 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex justify-center gap-4">
-      <div className="surface-1 on-surface-text flex items-center gap-2 p-1 px-3 w-4/6">
+    <form onSubmit={handleSubmit} className="flex justify-center gap-4 px-2">
+      <div className="surface-1 on-surface-text flex items-center gap-2 p-1 px-3 lg:w-4/6 w-full">
         <SearchIcon />
 
         <InputBase

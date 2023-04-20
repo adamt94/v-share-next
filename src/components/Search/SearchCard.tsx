@@ -9,8 +9,6 @@ import {
 } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import { useContext } from 'react'
-import { VideoQueueContext } from '../Room/Room'
 
 export type SearchCardProps = {
   heading: string
@@ -33,15 +31,15 @@ export default function SearchCard({
       className="relative w-60 m-4 surface-1 flex flex-col justify-between shadow-lg shadow-color"
     >
       <CardActionArea onClick={onCardClick}>
+        <div className="inset-0 absolute h-full w-full flex justify-center pt-6 opacity-0 hover:opacity-100 transition-opacity duration-500 z-10">
+          <PlayArrowIcon style={{ fontSize: 90 }} className="primary-text" />
+        </div>
         <div className="relative h-36">
           <CardMedia
             className="h-36"
             image={image}
             title="Contemplative Reptile"
           />
-          <div className="inset-0 absolute h-full w-full flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-500">
-            <PlayArrowIcon style={{ fontSize: 90 }} className="primary-text" />
-          </div>
         </div>
         <CardContent className="on-surface-text text-center">
           <p className="on-surface-text">{heading}</p>

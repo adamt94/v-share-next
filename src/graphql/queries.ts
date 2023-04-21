@@ -11,6 +11,7 @@ export type VideoListQuery = {
     rank: number
     platform: string
     src: string
+    user: string
 }
 
 

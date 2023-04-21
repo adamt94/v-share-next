@@ -27,7 +27,6 @@ export default function ChatTab() {
   useSubscription<MessagesSubscriptionResult>(SUBSCRIBE_TO_MESSAGES, {
     variables: { roomId: roomId },
     onData: ({ client, data }) => {
-      console.log(data)
       if (username !== data.data.subscribeToMessages.user) {
         setMessageList([...messageList, data.data.subscribeToMessages])
       }

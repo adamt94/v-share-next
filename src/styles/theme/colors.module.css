@@ -162,6 +162,9 @@
   background-color: var(--md-sys-color-surface-1) !important;
 }
 
+.surface-5 {
+  background-color: var(--md-sys-color-surface-5) !important;
+}
 .surface-container {
   background-color: var(--md-sys-color-surface-container) !important;
 }

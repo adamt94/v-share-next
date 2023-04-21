@@ -12,5 +12,17 @@ export default function VideoPlayer({
   playerRef,
   playerProps
 }: VideoPlayerProps) {
-  return <ReactPlayer ref={playerRef} {...playerProps} />
+  return (
+    <ReactPlayer
+      ref={playerRef}
+      {...playerProps}
+      config={{
+        youtube: {
+          playerVars: {
+            modestbranding: 0 // hides more videos button
+          }
+        }
+      }}
+    />
+  )
 }

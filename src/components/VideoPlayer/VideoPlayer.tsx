@@ -16,6 +16,8 @@ import {
 } from '@/graphql/mutations'
 import { SUBSCRIBE_TO_LATEST_INTERACTION } from '@/graphql/subscriptions'
 import { GET_LATEST_INTERACTION } from '@/graphql/queries'
+import VideoHintTile from './VideoHintTile'
+import VideoPlayTile from './VideoPlayTile'
 // This fixed SSR hydration issue cause by react-player
 const ReactVideoPlayer = dynamic(() => import('./ReactPlayerWrapper'), {
   ssr: false
@@ -116,6 +118,22 @@ export default function VideoPlayer() {
     setOnSeeking(true)
   }
 
+  const handlePlaybackChange = () => {
+    setUserInteracted({
+      variables: {
+        input: {
+          isPlaying: !isPlaying,
+          currentVideoTime: playedSeconds,
+          input: !isPlaying ? 'PLAY' : 'PAUSE',
+          videoId: currentVideoId,
+          user: username,
+          room: roomId
+        }
+      }
+    })
+    setIsPlaying(!isPlaying)
+  }
+
   // WHEN NEXT VIDEO IS PLAYED
   useEffect(() => {
     if (currentVideoId == 'NEXT_VIDEO' && videos.length) {
@@ -139,12 +157,12 @@ export default function VideoPlayer() {
 
   return (
     <section className="relative w-full flex flex-col">
-      <div
-        className="h-5625 max-h-[calc(100vh-3rem)] overflow-hidden pointer-events-none"
-        onClick={() => {
-          console.log('test')
-        }}
-      >
+      <div className="relative h-5625 max-h-[calc(100vh-3rem)] overflow-hidden">
+        <div className="absolute h-full w-full z-10">
+          {currentVideoId == '' && <VideoHintTile />}
+
+          <VideoPlayTile isPlaying={isPlaying} onClick={handlePlaybackChange} />
+        </div>
         <ReactVideoPlayer
           playerRef={player}
           playerProps={{
@@ -173,32 +191,13 @@ export default function VideoPlayer() {
                 setPlayedSeconds(data.playedSeconds)
               }
             },
-            config: {
-              youtube: {
-                playerVars: { controls: 0, showinfo: 1 }
-              }
-            },
             onDuration: (data) => setDuration(data)
           }}
         />
       </div>
       <VideoPlayerControls
         isPlaying={isPlaying}
-        onPlaybackChange={() => {
-          setUserInteracted({
-            variables: {
-              input: {
-                isPlaying: !isPlaying,
-                currentVideoTime: playedSeconds,
-                input: !isPlaying ? 'PLAY' : 'PAUSE',
-                videoId: currentVideoId,
-                user: username,
-                room: roomId
-              }
-            }
-          })
-          setIsPlaying(!isPlaying)
-        }}
+        onPlaybackChange={handlePlaybackChange}
         volume={volume}
         onVolumeChange={(value: number) => setVolume(value)}
         onSeekChange={seekTo}

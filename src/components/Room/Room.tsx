@@ -47,7 +47,7 @@ export const RoomContext = createContext<RoomContextType>({
 })
 
 export default function Room({ roomId }) {
-  const [showSecondColumn, setShowSecondColumn] = useState<boolean>(true)
+  const [showSecondColumn, setShowSecondColumn] = useState<boolean>(false)
   const [currentVideoId, setCurrentVideoId] = useState<string>('')
   const [videos, setVideos] = useState<Video[]>([])
 
@@ -66,21 +66,11 @@ export default function Room({ roomId }) {
         <VideoQueueContext.Provider value={{ videos, setVideos }}>
           <RoomContext.Provider value={{ roomId }}>
             <div className="flex h-screen flex-col sm:flex-row">
-              <section
-                className={`text-center flex flex-col overflow-auto w-full ${firstColumnMobile} sm:h-full`}
-                id="left-column"
-              >
-                <VideoPlayer />
-
-                <section className="p-0  py-5 max-overscroll-y  sm:p-5 ">
-                  <Search />
-                </section>
-              </section>
               <button
                 onClick={() => {
                   setShowSecondColumn(true)
                 }}
-                className={`absolute right-0 bottom-0 m-4 sm:top-0 sm:bottom-auto primary-container on-primary-container-text rounded-full p-2 focus:outline-none ${
+                className={`absolute right-0 bottom-0 m-4 sm:top-0 sm:bottom-auto z-20 primary-container on-primary-container-text rounded-full p-2 focus:outline-none ${
                   showSecondColumn && 'hidden'
                 }`}
               >
@@ -99,6 +89,17 @@ export default function Room({ roomId }) {
                   />
                 </svg>
               </button>
+              <section
+                className={`text-center flex flex-col overflow-auto w-full ${firstColumnMobile} sm:h-full`}
+                id="left-column"
+              >
+                <VideoPlayer />
+
+                <section className="p-0  py-5 max-overscroll-y  sm:p-5 ">
+                  <Search />
+                </section>
+              </section>
+
               <aside
                 className={`${secondColumnClass} overflow-hidden hide-scroll ${secondColumnMobile} sm:h-full`}
                 id="right-column"

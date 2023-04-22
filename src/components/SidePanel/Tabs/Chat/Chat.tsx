@@ -78,6 +78,8 @@ export default function ChatTab() {
               <Message
                 key={message.text + i}
                 message={message.text}
+                username={message.user}
+                sentTime={message.createdAt}
                 sender={username === message.user ? true : false}
               />
             ))}

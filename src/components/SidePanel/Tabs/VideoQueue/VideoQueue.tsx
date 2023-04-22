@@ -41,12 +41,13 @@ export default function VideoQueue() {
   const onDragEnd = useCallback((result: DropResult) => {
     setVideos((prevVideos) => {
       const newVideos = [...prevVideos]
-
+      console.log(result)
       if (result.destination) {
         const [removed] = newVideos.splice(result.source.index, 1)
         newVideos.splice(result.destination.index, 0, removed)
+        console.log(newVideos)
         newVideos.forEach((video, index) => {
-          if (prevVideos[index].rank !== index) {
+          if (video.rank !== index) {
             updateVideoList({
               variables: {
                 input: {

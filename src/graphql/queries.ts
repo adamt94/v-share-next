@@ -41,6 +41,7 @@ export type MessagesBySentDateQueryVariables = {
 export type MessageQuery = {
   user: string
   text: string
+  createdAt?: string
   roomId?: string
 }
 
@@ -71,6 +72,7 @@ export const MESSAGES_BY_SEND_DATE = gql`
       items {
         user
         text
+        createdAt
       }
       nextToken
     }

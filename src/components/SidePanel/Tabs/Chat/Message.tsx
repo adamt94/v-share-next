@@ -39,7 +39,7 @@ export default function Message({
       {sender ? (
         <div className="flex w-full mt-2 space-x-3 max-w-xs">
           <div>
-            <span className="text-sm on-surface-variant-text opacity-60">
+            <span className="on-surface-variant-text opacity-60 label-small">
               You
             </span>
             <div className="surface on-surface-text p-3 rounded-r-lg rounded-bl-lg">
@@ -53,7 +53,7 @@ export default function Message({
       ) : (
         <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
           <div>
-            <span className="text-sm on-surface-variant-text">{username}</span>
+            <span className=" label-small tertiary-text">{username}</span>
             <div className="primary on-primary-text p-3 rounded-l-lg rounded-br-lg">
               <p className="text-sm">{message}</p>
             </div>

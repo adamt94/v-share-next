@@ -9,6 +9,7 @@ import Search, { Video } from '../Search/Search'
 import SidePanel from '../SidePanel/SidePanel'
 import VideoPlayer from '../VideoPlayer/VideoPlayer'
 import { useRandomName } from '@/util/useRandomName'
+import RoomId from '../RoomId/RoomId'
 
 type VideoContextType = {
   currentVideoId: string
@@ -96,6 +97,13 @@ export default function Room({ roomId }) {
                 <VideoPlayer />
 
                 <section className="p-0  py-5 max-overscroll-y  sm:p-5 ">
+                  <RoomId
+                    roomId={
+                      window.location.host +
+                      window.location.pathname +
+                      window.location.search
+                    }
+                  />
                   <Search />
                 </section>
               </section>

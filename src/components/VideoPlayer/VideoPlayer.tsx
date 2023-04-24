@@ -157,7 +157,10 @@ export default function VideoPlayer() {
 
   return (
     <section className="relative w-full flex flex-col">
-      <div className="relative h-5625 max-h-[calc(100vh-3rem)] overflow-hidden">
+      <div
+        id="video"
+        className="relative h-5625 max-h-[calc(100vh-3rem)] overflow-hidden"
+      >
         <div className="absolute h-full w-full z-10">
           {currentVideoId == '' && <VideoHintTile />}
 
@@ -207,12 +210,12 @@ export default function VideoPlayer() {
         played={0}
         hasNext={videos.length > 0}
         onNext={() => {
-          setCurrentVideoId('')
+          setCurrentVideoId('NEXT_VIDEO')
         }}
         duration={duration}
         elapsedTime={playedSeconds}
-        onToggleFullScreen={function (): void {
-          throw new Error('Function not implemented.')
+        onToggleFullScreen={() => {
+          document.querySelector('#video').requestFullscreen()
         }}
         expandSeeker={false}
         numberOfUsers={0}

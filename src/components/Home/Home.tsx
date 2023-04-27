@@ -8,6 +8,8 @@ import ChatIcon from '@mui/icons-material/Chat'
 import Search from '../Search/Search'
 import Link from 'next/link'
 import { generateRandomString } from '@/util/numberFormats'
+import Image from 'next/image'
+import Logo from '@/util/Logo'
 
 export default function App() {
   const roomId = generateRandomString(8)
@@ -16,6 +18,7 @@ export default function App() {
       {/* {!!isALobby && userName && <Video numberOfUsers={numberOfUsers} />} */}
       {/* <input type="hidden" name="lobby" value={randomString(10)} /> */}
       <section className="text-center flex flex-col gap-8 p-5">
+        <Logo className="primary-text mx-auto display-large logo-size" />
         <h1 className="display-medium on-background-text">
           Watch Videos Together
         </h1>

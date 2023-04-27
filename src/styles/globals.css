@@ -20,6 +20,7 @@ iframe {
   position: absolute;
 }
 
+
 #left-column {
   scrollbar-width: none;
   /* For Firefox */
@@ -81,4 +82,7 @@ iframe {
     width: 100%;
   }
 
+}
+.logo-size {
+  font-size: 10rem;
 }

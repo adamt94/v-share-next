@@ -8,7 +8,7 @@ export default function HomPage() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>v-share</title>
         <meta
           name="description"
           content="v-share - watch videos together with friends!"

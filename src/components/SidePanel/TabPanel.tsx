@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import ChatTab from './Tabs/Chat/Chat'
-import VideoTab from './Tabs/VideoQueue/VideoQueue'
 
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
@@ -50,7 +48,7 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
             setActiveTab(1)
           }}
           icon={<ChatBubbleOutlineIcon />}
-          label={'Messages'}
+          label={tabs[0].title}
         />
         <TabButton
           index={0}
@@ -58,7 +56,7 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
             setActiveTab(2)
           }}
           icon={<FormatListBulletedIcon />}
-          label={'Video Queue'}
+          label={tabs[1].title}
         />
       </div>
       <div className="h-full  flex-grow overflow-y-auto">
@@ -68,7 +66,7 @@ export const TabPanel = ({ defaultTab = 1, tabs }: TabPanelProps) => {
           }   rounded-md`}
         >
           <div className="flex flex-col flex-grow w-full shadow-xl rounded-lg h-full">
-            {activeTab === 1 ? <ChatTab /> : <VideoTab />}
+            {activeTab === 1 ? tabs[0].content : tabs[1].content}
           </div>
         </div>
       </div>

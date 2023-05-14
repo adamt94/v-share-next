@@ -16,73 +16,45 @@ import {
 } from '@/graphql/subscriptions'
 
 
-export default function ChatTab() {
+type ChatTabProps = {
+  messages: MessageQuery[]
+  sendMessage: (message: string) => void
+  username: string
+}
+
+export default function ChatTab({
+  messages,
+  sendMessage,
+  username
+}: ChatTabProps) {
   const [message, setMessage] = useState('')
-  const [messageList, setMessageList] = useState<MessageQuery[]>([])
-  const [sendMessage] = useMutation(CREATE_MESSAGE)
-
-  const { roomId } = useContext(RoomContext)
-  const { username } = useContext(UserNameContext)
-
-  useSubscription<MessagesSubscriptionResult>(SUBSCRIBE_TO_MESSAGES, {
-    variables: { roomId: roomId },
-    onData: ({ client, data }) => {
-      if (username !== data.data.subscribeToMessages.user) {
-        setMessageList([...messageList, data.data.subscribeToMessages])
-      }
-    }
-  })
-
-  const {
-    loading,
-    error,
-    data: { messagesBySentDate } = {}
-  } = useQuery<MessagesBySentDateQueryResult, MessagesBySentDateQueryVariables>(
-    MESSAGES_BY_SEND_DATE,
-    {
-      variables: {
-        roomId: roomId,
-        sortDirection: 'ASC'
-      }
-    }
-  )
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (message.trim() !== '') {
-      setMessageList([
-        ...messageList,
-        { text: message, user: username, roomId: roomId }
-      ])
+      sendMessage(message)
       setMessage('')
-      sendMessage({
-        variables: {
-          input: { text: message, user: username, roomId: roomId }
-        }
-      })
+      // sendMessage({
+      //   variables: {
+      //     input: { text: message, user: username, roomId: roomId }
+      //   }
+      // })
     }
   }
-
-  useEffect(() => {
-    if (messagesBySentDate) {
-      setMessageList(messagesBySentDate.items)
-    }
-  }, [messagesBySentDate])
 
   return (
     <>
       <div className="flex-grow overflow-auto flex flex-col-reverse">
         <div className="flex flex-col">
-          {!loading &&
-            messageList.map((message, i) => (
-              <Message
-                key={message.text + i}
-                message={message.text}
-                username={message.user}
-                sentTime={message.createdAt}
-                sender={username === message.user ? true : false}
-              />
-            ))}
+          {messages.map((message, i) => (
+            <Message
+              key={message.text + i}
+              message={message.text}
+              username={message.user}
+              sentTime={message.createdAt}
+              sender={username === message.user ? true : false}
+            />
+          ))}
         </div>
       </div>
       <div className="surface-1 p-4 pt-0 flex-shrink">

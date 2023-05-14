@@ -1,5 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TabPanel } from './TabPanel'
+import ChatTab from './Tabs/Chat/Chat'
+import VideoQueue from './Tabs/VideoQueue/VideoQueue'
+import { useMutation, useQuery, useSubscription } from '@apollo/client'
+import {
+  MessagesSubscriptionResult,
+  SUBSCRIBE_TO_MESSAGES
+} from '@/graphql/subscriptions'
+import {
+  MESSAGES_BY_SEND_DATE,
+  MessageQuery,
+  MessagesBySentDateQueryResult,
+  MessagesBySentDateQueryVariables
+} from '@/graphql/queries'
+import { RoomContext, UserNameContext } from '../Room/Room'
+import { CREATE_MESSAGE } from '@/graphql/mutations'
 
 type SidePanelProps = {
   onToggle: (isOpen: boolean) => void
@@ -9,8 +24,47 @@ type SidePanelProps = {
 }
 
 const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
+  const [messageList, setMessageList] = useState<MessageQuery[]>([])
+  const [sendMessage] = useMutation(CREATE_MESSAGE)
+
+  const { roomId } = useContext(RoomContext)
+  const { username } = useContext(UserNameContext)
+
+  const { data: { messagesBySentDate } = {} } = useQuery<
+    MessagesBySentDateQueryResult,
+    MessagesBySentDateQueryVariables
+  >(MESSAGES_BY_SEND_DATE, {
+    variables: {
+      roomId: roomId,
+      sortDirection: 'ASC'
+    }
+  })
+  useSubscription<MessagesSubscriptionResult>(SUBSCRIBE_TO_MESSAGES, {
+    variables: { roomId: roomId },
+    onData: ({ client, data }) => {
+      if (username !== data.data.subscribeToMessages.user) {
+        setMessageList([...messageList, data.data.subscribeToMessages])
+      }
+    }
+  })
+
+  useEffect(() => {
+    if (messagesBySentDate) {
+      setMessageList(messagesBySentDate.items)
+    }
+  }, [messagesBySentDate])
+
   const togglePanel = () => {
     onToggle(!isOpen)
+  }
+
+  const sendMessageHandler = (message: string) => {
+    setMessageList([...messageList, { text: message, user: username }])
+    sendMessage({
+      variables: {
+        input: { text: message, user: username, roomId: roomId }
+      }
+    })
   }
 
   return (
@@ -19,11 +73,17 @@ const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
         tabs={[
           {
             title: 'Messages',
-            content: <p>testing</p>
+            content: (
+              <ChatTab
+                messages={messageList}
+                sendMessage={sendMessageHandler}
+                username={username}
+              />
+            )
           },
           {
             title: 'Video Queue',
-            content: <p>testing</p>
+            content: <VideoQueue />
           }
         ]}
       />

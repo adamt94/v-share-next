@@ -39,7 +39,7 @@ export default function Search() {
     nextFetchPolicy: 'cache-first'
   })
   const [searchValue, setSearchValue] = useState('')
-  const { setCurrentVideoId } = useContext(CurrentVideoContext)
+  const { currentVideoId, setCurrentVideoId } = useContext(CurrentVideoContext)
   const { videos, setVideos } = useContext(VideoQueueContext)
   const { roomId } = useContext(RoomContext)
   const { username } = useContext(UserNameContext)
@@ -89,21 +89,37 @@ export default function Search() {
               subheading={video.user}
               image={video.thumbnail}
               onAddToQueue={() => {
-                setVideos([...videos, video]),
-                  addVideoToQueue({
+                if (videos.length == 0 && !currentVideoId) {
+                  setUserInteracted({
                     variables: {
                       input: {
-                        room: roomId,
-                        description: video.title,
-                        channelTitle: video.user,
-                        title: video.title,
-                        src: video.src,
-                        imgurl: video.thumbnail,
-                        rank: videos.length,
-                        user: username
+                        isPlaying: true,
+                        currentVideoTime: 0,
+                        input: 'NEXT',
+                        videoId: video.src,
+                        user: username,
+                        room: roomId
                       }
                     }
                   })
+                  setCurrentVideoId(video.src)
+                } else {
+                  setVideos([...videos, video]),
+                    addVideoToQueue({
+                      variables: {
+                        input: {
+                          room: roomId,
+                          description: video.title,
+                          channelTitle: video.user,
+                          title: video.title,
+                          src: video.src,
+                          imgurl: video.thumbnail,
+                          rank: videos.length,
+                          user: username
+                        }
+                      }
+                    })
+                }
               }}
               onCardClick={() => {
                 setUserInteracted({

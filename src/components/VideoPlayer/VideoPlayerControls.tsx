@@ -106,7 +106,7 @@ export default function VideoPlayerControls({
           </span>
         </div>
 
-        <div className="on-surface-text">{numberOfUsers}</div>
+        <div className="on-surface-text">{numberOfUsers || ''}</div>
 
         <PersonIcon className="secondary-text" />
         <button onClick={onToggleFullScreen} className=" on-surface-text">

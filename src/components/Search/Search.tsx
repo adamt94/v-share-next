@@ -89,7 +89,11 @@ export default function Search() {
               subheading={video.user}
               image={video.thumbnail}
               onAddToQueue={() => {
-                if (videos.length == 0 && !currentVideoId) {
+                console.log(currentVideoId)
+                if (
+                  (videos.length == 0 && !currentVideoId) ||
+                  currentVideoId == 'NEXT_VIDEO'
+                ) {
                   setUserInteracted({
                     variables: {
                       input: {

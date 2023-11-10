@@ -1,20 +1,7 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import Message from './Message'
 import SendIcon from '@mui/icons-material/Send'
-import { useMutation, useQuery, useSubscription } from '@apollo/client'
-import { RoomContext, UserNameContext } from '@/components/Room/Room'
-import {
-  MESSAGES_BY_SEND_DATE,
-  MessageQuery,
-  MessagesBySentDateQueryResult,
-  MessagesBySentDateQueryVariables
-} from '@/graphql/queries'
-import { CREATE_MESSAGE } from '@/graphql/mutations'
-import {
-  MessagesSubscriptionResult,
-  SUBSCRIBE_TO_MESSAGES
-} from '@/graphql/subscriptions'
-
+import { MessageQuery } from '@/graphql/queries'
 
 type ChatTabProps = {
   messages: MessageQuery[]

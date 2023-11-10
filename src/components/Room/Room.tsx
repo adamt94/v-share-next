@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState
-} from 'react'
+import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 import Search, { Video } from '../Search/Search'
 import SidePanel from '../SidePanel/SidePanel'
 import VideoPlayer from '../VideoPlayer/VideoPlayer'

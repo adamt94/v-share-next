@@ -36,7 +36,8 @@ const SidePanel = ({ onToggle, isOpen }: SidePanelProps) => {
   >(MESSAGES_BY_SEND_DATE, {
     variables: {
       roomId: roomId,
-      sortDirection: 'ASC'
+      sortDirection: 'ASC',
+      limit: 2
     }
   })
   useSubscription<MessagesSubscriptionResult>(SUBSCRIBE_TO_MESSAGES, {
